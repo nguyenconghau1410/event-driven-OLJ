@@ -1,0 +1,41 @@
+<div class="main-content pt-20">
+    <h2>{{title}}</h2>
+    <hr class="custom-divider">
+    <div class="mt-4">
+        <nz-pagination (nzPageIndexChange)="onPageIndexChange($event)" [nzPageIndex]="pageIndex" [nzPageSize]="pageSize"
+            [nzTotal]="total"></nz-pagination>
+    </div>
+    <div class="mt-4 table-content  ml-0 mx-auto overflow-auto">
+        <table class="w-full border-collapse border border-gray-300">
+            <thead class="bg-gray-100 text-black">
+                <tr>
+                    <th class="text-left border border-gray-300 px-4 py-2" style="width: 20%;">Tên problem</th>
+                    <th class="border border-gray-300 px-4 py-2" style="width: 20%;">Tên thành viên</th>
+                    <th class="border border-gray-300 px-4 py-2" style="width: 10%;">Ngôn ngữ</th>
+                    <th class="border border-gray-300 px-4 py-2" style="width: 20%;">Thời gian & Bộ nhớ</th>
+                    <th class="border border-gray-300 px-4 py-2" style="width: 20%;">Kết quả</th>
+                    <th class="border border-gray-300 px-4 py-2" style="width: 10%;">Tổng điểm</th>
+                    <th class="border border-gray-300 px-4 py-2" style="width: 10%;"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let submission of detailContestList"
+                    class="text-center border-bottom hover:bg-gray-100 cursor-pointer">
+                    <td class="text-left px-4 py-2">{{submission.title}}</td>
+                    <td class="px-4 py-2">{{submission.name}}</td>
+                    <td class="px-4 py-2">{{normalizeString(submission.language)}}</td>
+                    <td class="px-4 py-2">{{formatNumber(submission.time)}} s / {{formatNumber(submission.memory)}} MB
+                    </td>
+                    <td class="px-4 py-2">{{submission.result}}</td>
+                    <td class="px-4 py-2">{{formatNumber(submission.point)}}</td>
+                    <td *ngIf="check(submission.userId)" class="px-4 py-2"><a
+                            (click)="viewSubmission(submission.id)">View</a></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="mt-4">
+        <nz-pagination (nzPageIndexChange)="onPageIndexChange($event)" [nzPageIndex]="pageIndex" [nzPageSize]="pageSize"
+            [nzTotal]="total"></nz-pagination>
+    </div>
+</div>

@@ -1,0 +1,49 @@
+<div *ngIf="!check" class="main-content pb-20">
+    <div class="mt-4">
+        <span class="text-xl">Quản lý Problems</span>
+    </div>
+    <div class="mt-4 flex items-center">
+        <button (click)="search()"
+            class="bg-white-b rounded hover:bg-blue-500 text-black py-2 px-4 border border-gray-400">
+            Tìm kiếm
+        </button>
+        <button (click)="reset()"
+            class="mr-4 ml-4 rounded bg-white-b hover:bg-gray-300 text-black py-2 px-4 border border-gray-400">
+            Reset
+        </button>
+        <input type="text" [(ngModel)]="searchFor" placeholder="Nhập tên Problem..."
+            class="border border-gray-300 px-3 py-1 w-1/3 rounded transition duration-300 ease-in-out hover:border-blue-500">
+    </div>
+    <div class="mt-4">
+        <nz-pagination (nzPageIndexChange)="onPageIndexChange($event)" [nzPageIndex]="pageIndex" [nzPageSize]="pageSize"
+            [nzTotal]="total"></nz-pagination>
+    </div>
+    <div class="mt-4 table-content  ml-0 mx-auto overflow-auto">
+        <table class="w-full border-collapse border border-gray-300">
+            <thead class="bg-gray-100 text-black">
+                <tr>
+                    <th class="text-left border border-gray-300 px-4 py-2" style="width: 15%;">ID</th>
+                    <th class="border border-gray-300 px-4 py-2" style="width: 27%;">Tên Problem</th>
+                    <th class="border border-gray-300 px-4 py-2" style="width: 17%;">Người tạo</th>
+                    <th class="border border-gray-300 px-4 py-2" style="width: 15%;">Số testcase</th>
+                    <th class="border border-gray-300 px-4 py-2" style="width: 10%;">Trạng thái</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let problem of problems" (click)="redirect(problem.id)"
+                    class="text-center border-bottom hover:bg-gray-100 cursor-pointer">
+                    <td class="text-left px-4 py-2">{{problem.id}}</td>
+                    <td class="px-4 py-2">{{problem.title}}</td>
+                    <td class="px-4 py-2">{{problem.email}}</td>
+                    <td class="px-4 py-2">{{problem.testcase}}</td>
+                    <td class="px-4 py-2">{{problem.state}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="pt-20" *ngIf="check">
+    <h1 class="text-black flex justify-center items-center">Không tìm thấy trang</h1>
+
+</div>

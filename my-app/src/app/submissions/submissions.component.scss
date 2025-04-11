@@ -1,0 +1,58 @@
+@media (max-width: 1024px) {
+    .main-problems {
+        margin-left: 20px;
+        margin-right: 20px;
+    }
+
+    .hd {
+        display: block;
+    }
+
+    .table-content {
+        width: 100%;
+    }
+
+    .search-result-content {
+        display: none;
+    }
+}
+
+@media (min-width: 1024px) {
+    .main-problems {
+        margin-left: 60px;
+        margin-right: 60px;
+    }
+
+    .hd {
+        display: none;
+    }
+
+    .table-content {
+        width: 78%;
+    }
+
+    .search-result-content {
+        width: 20%;
+    }
+}
+
+h2 {
+    font-size: 30px;
+    padding-top: 16px;
+}
+
+.custom-divider {
+    border-top: 1px solid rgba(0, 0, 0, .2);
+}
+
+.main-content {
+    margin-top: 20px;
+}
+
+th {
+    text-align: left;
+}
+
+nz-pagination {
+    margin-top: 20px;
+}

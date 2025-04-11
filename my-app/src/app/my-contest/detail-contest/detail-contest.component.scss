@@ -1,0 +1,61 @@
+@media (max-width: 1024px) {
+    .main-content {
+        margin-left: 20px;
+        margin-right: 20px;
+    }
+
+    .ml-200 {
+        margin-left: 20px;
+    }
+}
+
+@media (min-width: 1024px) {
+    .main-content {
+        margin-left: 200px;
+        margin-right: 200px;
+    }
+
+    .ml-200 {
+        margin-left: 200px;
+    }
+}
+
+.custom-divider {
+    border-top: 1px solid rgba(0, 0, 0, .2);
+}
+
+
+:host ::ng-deep .ck-editor__editable_inline {
+    min-height: 120px;
+}
+
+.larger-checkbox {
+    transform: scale(1.5);
+}
+
+.bg-button {
+    background: linear-gradient(to bottom, #337ab7 0, #265a88 100%) repeat-x;
+}
+
+.bg-button:hover {
+    background: linear-gradient(to bottom, #337ab7 0, #265a88 100%) repeat-x;
+}
+
+.bg-white-b {
+    background: white;
+    color: black;
+}
+
+.bg-white-b:hover {
+    background: linear-gradient(to bottom, #337ab7 0, #265a88 100%) repeat-x;
+    color: white;
+}
+
+.nav-tabs .active a {
+    background-color: #fff;
+    color: #1f2937;
+}
+
+.pad {
+    padding-bottom: 14px;
+}

@@ -1,0 +1,41 @@
+<div *ngIf="!check" class="main-content pb-20">
+    <div class="mt-4">
+        <span class="text-xl">Quản lý testcase</span><br><br>
+        <span class="text-base">Những folder testcase không dùng cho Problem nào sẽ hiện ở đây.</span>
+    </div>
+    <div *ngIf="folders.length !== 0" class="mt-4 ml-0 mx-auto overflow-auto">
+        <table class="w-full border-collapse border border-gray-300">
+            <thead class="bg-gray-100 text-black">
+                <tr>
+                    <th class="text-left border border-gray-300 px-4 py-2" style="width: 40%;">Tên folder</th>
+                    <th class="border border-gray-300 px-4 py-2">Số lượng input test</th>
+                    <th class="border border-gray-300 px-4 py-2">Số lượng output test</th>
+                    <th class="border border-gray-300 px-4 py-2"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let folder of folders;let i = index"
+                    class="text-center border-bottom hover:bg-gray-100 cursor-pointer">
+                    <td class="text-left px-4 py-2">{{folder.name}}</td>
+                    <td class="px-4 py-2">{{folder.inputFileCount}}</td>
+                    <td class="px-4 py-2">{{folder.outputFileCount}}</td>
+                    <td class="text-left px-4 py-2"><a (click)="showModal(i)"><mat-icon
+                                style="vertical-align: middle; color: red;" title="Xóa user">close</mat-icon></a></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div *ngIf="folders.length === 0">
+        <h1>Hiện tại không có folder nào !</h1>
+    </div>
+</div>
+<nz-modal [(nzVisible)]="isVisible" nzTitle="Thông báo" [nzOkText]="textOk" [nzCancelText]="textCancel"
+    (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
+    <ng-container *nzModalContent>
+        <p>Bạn chắc chắn muốn xóa folder này?</p>
+    </ng-container>
+</nz-modal>
+<div class="pt-20" *ngIf="check">
+    <h1 class="text-black flex justify-center items-center">Không tìm thấy trang</h1>
+
+</div>

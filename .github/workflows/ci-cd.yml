@@ -1,0 +1,96 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - deploy
+  pull_request:
+    branches:
+      - deploy
+
+jobs:
+  detect-changes:
+    name: Detect Changed Modules
+    runs-on: ubuntu-latest
+    outputs:
+      judge: ${{ steps.filter.outputs.judge }}
+      oj: ${{ steps.filter.outputs.oj }}
+      myapp: ${{ steps.filter.outputs.myapp }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - id: filter
+        name: Filter changed paths
+        uses: dorny/paths-filter@v3
+        with:
+          filters: |
+            judge:
+              - 'judge/**'
+            oj:
+              - 'oj/**'
+            myapp:
+              - 'my-app/**'
+
+  login-docker:
+    name: Login to Docker Hub
+    runs-on: ubuntu-latest
+    steps:
+      - name: Docker Hub login
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USER_NAME }}
+          password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+
+  build-judge:
+    name: Build & Push Judge Image
+    needs: [detect-changes, login-docker]
+    if: needs.detect-changes.outputs.judge == 'true'
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: judge
+    steps:
+      - uses: actions/checkout@v3
+      - name: Build & Push Judge
+        run: |
+          IMAGE=${{ secrets.DOCKER_USER_NAME }}/judge
+          docker build -t $IMAGE:latest -t $IMAGE:${{ github.sha }} .
+          docker push $IMAGE:latest
+          docker push $IMAGE:${{ github.sha }}
+
+  build-oj:
+    name: Build & Push OJ Image
+    needs: [detect-changes, login-docker]
+    if: needs.detect-changes.outputs.oj == 'true'
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: oj
+    steps:
+      - uses: actions/checkout@v3
+      - name: Build & Push OJ
+        run: |
+          IMAGE=${{ secrets.DOCKER_USER_NAME }}/oj
+          docker build -t $IMAGE:latest -t $IMAGE:${{ github.sha }} .
+          docker push $IMAGE:latest
+          docker push $IMAGE:${{ github.sha }}
+
+  build-myapp:
+    name: Build & Push My App Image
+    needs: [detect-changes, login-docker]
+    if: needs.detect-changes.outputs.myapp == 'true'
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: my-app
+    steps:
+      - uses: actions/checkout@v3
+      - name: Build & Push My App
+        run: |
+          IMAGE=${{ secrets.DOCKER_USER_NAME }}/my-app
+          docker build -t $IMAGE:latest -t $IMAGE:${{ github.sha }} .
+          docker push $IMAGE:latest
+          docker push $IMAGE:${{ github.sha }}

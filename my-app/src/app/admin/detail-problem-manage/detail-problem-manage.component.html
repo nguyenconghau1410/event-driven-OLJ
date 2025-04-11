@@ -1,0 +1,79 @@
+<div *ngIf="!check" class="main-content pb-20">
+    <div class="mt-4">
+        <span class="text-xl text-black"><a (click)="goBack()">Quản lý Problems</a> > </span><span
+            class="text-xl">{{problem.id}}</span>
+    </div>
+    <div class="mt-10 flex">
+        <div class="w-1/2 flex text-base">
+            <div class="w-1/2 font-bold">
+                <p>ProblemID:</p>
+                <p>Tên Problem:</p>
+                <p>Độ khó:</p>
+                <p>Trạng thái:</p>
+                <p>Số lượng TestCase</p>
+                <p>Email:</p>
+                <p>Thể loại:</p>
+                <p>Testcase folder:</p>
+                <p>Chi tiết Problem:</p>
+            </div>
+            <div class="w-1/2">
+                <p>{{problem.id}}</p>
+                <p>{{problem.title}}</p>
+                <p>{{problem.difficulty}}</p>
+                <p>{{problem.state}}</p>
+                <p>{{problem.testcase.length}}</p>
+                <p>{{problem.email}}</p>
+                <p>{{handleTopics()}}</p>
+                <p>{{handleFolder()}}</p>
+                <a (click)="redirect('problem')">Xem tại đây...</a>
+            </div>
+        </div>
+        <div class="w-1/2 flex text-base">
+            <div class="w-1/2 font-bold">
+                <p>Tổng số Submissions:</p>
+                <p>Số Submissions AC:</p>
+                <p>Số Submissions không AC:</p>
+                <p>Xem các Submissions:</p>
+            </div>
+            <div class="w-1/2">
+                <p *ngIf="statistic">{{statistic.total}}</p>
+                <p *ngIf="!statistic">0</p>
+                <p *ngIf="statistic">{{statistic.totalAC}}</p>
+                <p *ngIf="!statistic">0</p>
+                <p *ngIf="statistic">{{statistic.total - statistic.totalAC}}</p>
+                <p *ngIf="!statistic">0</p>
+                <a (click)="redirect('submissions')">Xem tại đây...</a>
+            </div>
+        </div>
+    </div>
+    <div class="mt-4">
+        <button (click)="showModal(0)"
+            class="mr-4 bg-white-b hover:bg-red-500 text-black py-2 px-4 border border-gray-400">
+            Xóa Problem
+        </button>
+        <button (click)="showModal(1)"
+            class="mr-4 bg-white-b hover:bg-red-500 text-black py-2 px-4 border border-gray-400">
+            Xóa Submissions NOT AC
+        </button>
+    </div>
+</div>
+
+<nz-modal [(nzVisible)]="isVisible" nzTitle="Thông báo" [nzOkText]="textOk" [nzCancelText]="textCancel"
+    (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
+    <ng-container *nzModalContent>
+        <p>Bạn chắc chắn muốn xóa Problem này?</p>
+        <p>Khi xóa thì tất cả các dữ liệu liên quan đến Problem đều bị xóa kể cả lịch sử nộp bài của các thành viên.</p>
+    </ng-container>
+</nz-modal>
+
+<nz-modal [(nzVisible)]="isVisible1" nzTitle="Thông báo" [nzOkText]="textOk" [nzCancelText]="textCancel"
+    (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk1()">
+    <ng-container *nzModalContent>
+        <p>Bạn chắc chắn muốn xóa các submissions không ACCEPTED của Problem này?</p>
+    </ng-container>
+</nz-modal>
+
+<div class="pt-20" *ngIf="check">
+    <h1 class="text-black flex justify-center items-center">Không tìm thấy trang</h1>
+
+</div>

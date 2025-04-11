@@ -1,0 +1,94 @@
+<div class="main-problems pt-20 pb-20">
+    <h2>Danh sách bài nộp</h2>
+    <hr class="custom-divider">
+    <div class="mt-4">
+        <div class="hd w-2/3">
+            <div class="search-content mb-4 overflow-hidden rounded-lg">
+                <div class="border border-gray-300">
+                    <div class="bg-gray-800 text-white">
+                        <p class="px-4 py-2 text-base">Thống kê</p>
+                    </div>
+                    <div class="m-4">
+                        <canvas baseChart width="200" height="200" type="pie" [data]="chartData">
+                        </canvas>
+                    </div>
+                    <div class="mt-4 mb-4 flex justify-center items-center">
+                        <span>Tổng: {{total}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <nz-pagination (nzPageIndexChange)="onPageIndexChange($event)" [nzPageIndex]="index" [nzPageSize]="15"
+        [nzTotal]="total"></nz-pagination>
+    <div class="main-content">
+        <div class="flex flex-wrap">
+            <div class="table-content ml-0 mx-auto overflow-auto rounded-lg">
+                <table class="w-full border-collapse border border-gray-300">
+                    <thead class="bg-gray-800 text-white">
+                        <tr>
+                            <th class="border border-gray-300 px-4 py-2" style="width: 11%;">Kết quả</th>
+                            <th class="border border-gray-300 px-4 py-2">Thông tin nộp bài</th>
+                            <th class="border border-gray-300 px-4 py-2" style="width: 10%;">Thời gian</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let submission of submissionList">
+                            <td *ngIf="submission.result" [ngClass]="{'bg-green-400': submission!.result === 'ACCEPTED',
+                            'bg-red-400' : submission!.result !== 'ACCEPTED'}"
+                                class="border border-gray-300 px-4 py-2 text-center text-base bold">
+                                <span
+                                    *ngIf="check(submission.result)">{{submission.rightTest}}/{{submission.totalTest}}</span>
+                                <span *ngIf="!check(submission.result)">--/--</span>
+                                <p class="text-sm">{{adjustingString(submission.result)}} |
+                                    {{normalizeString(submission.language)}}</p>
+                            </td>
+                            <td *ngIf="!submission.result"
+                                class="border border-gray-300 bg-gray-400 px-4 py-2 text-center text-base bold">
+                                <span>Error</span>
+                            </td>
+                            <td class="border border-gray-300 px-4 py-2">
+                                <div class="flex items-center justify-between">
+                                    <a (click)="redirect(submission.problemId)" class="text-xl">{{submission.title}}</a>
+                                    <a *ngIf="user!.role!.code !== 'STUDENT'" (click)="click(submission.id)"><mat-icon
+                                            class="text-black">visibility</mat-icon></a>
+                                </div>
+                                <span class="text-base">{{submission.name}}, </span>
+                                <span class="text-base">{{submission.createdAt}}</span>
+                            </td>
+                            <td *ngIf="check(submission.result)"
+                                class="border border-gray-300 px-4 py-2 text-center text-base bold">
+                                {{formatNumber(submission.time)}}s
+                                <p class="text-sm">{{formatNumber(submission.memory)}} MB</p>
+                            </td>
+                            <td *ngIf="!check(submission.result)"
+                                class="border border-gray-300 px-4 py-2 text-center text-base bold">
+                                ---
+                                <p class="text-sm">---</p>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="search-result-content w-full">
+                <div class="search-content mb-4 overflow-hidden rounded-lg">
+                    <div class="border border-gray-300">
+                        <div class="bg-gray-800 text-white">
+                            <p class="px-4 py-2 text-base">Thống kê</p>
+                        </div>
+                        <div class="m-4">
+                            <canvas baseChart width="200" height="200" type="pie" [data]="chartData">
+                            </canvas>
+                        </div>
+                        <div class="mt-4 mb-4 flex justify-center items-center">
+                            <span>Tổng: {{total}}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <nz-pagination (nzPageIndexChange)="onPageIndexChange($event)" [nzPageIndex]="index" [nzPageSize]="15"
+        [nzTotal]="total"></nz-pagination>
+</div>

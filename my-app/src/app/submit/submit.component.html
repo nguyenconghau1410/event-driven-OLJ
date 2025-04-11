@@ -1,0 +1,41 @@
+<div class="main-problems pt-20 pb-20">
+    <div class="flex justify-between">
+        <div>
+            <h2>Nộp bài</h2>
+        </div>
+        <div><button (click)="submit()"
+                class="mt-4 w-full bg-button bg-button-hover:hover text-white py-2 px-4 rounded">
+                Submit
+            </button></div>
+    </div>
+    <hr class="custom-divider">
+    <div class="mt-8">
+        <div class="mx-auto">
+            <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+                <div class="mb-4">
+                    <label class="block text-gray-700 text-sm font-bold mb-2" for="code">
+                        Code
+                    </label>
+                    <div class="border border-black">
+                        <ngx-codemirror [options]="options" [(ngModel)]="code" [autoFocus]="false"></ngx-codemirror>
+                    </div>
+                </div>
+                <div class="mb-4">
+                    <label class="block text-gray-700 text-sm font-bold mb-2" for="language">
+                        Ngôn ngữ
+                    </label>
+                    <div class="relative">
+                        <select id="language" name="language" [(ngModel)]="languageMode" (change)="onChange()"
+                            class="block appearance-none w-full bg-white border border-gray-300 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:border-blue-500">
+                            <option value="c">C</option>
+                            <option value="cpp" selected>C++</option>
+                            <option value="java">Java</option>
+                            <option value="python">Python</option>
+                            <option value="php">PHP 8</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

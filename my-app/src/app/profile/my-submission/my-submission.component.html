@@ -1,0 +1,57 @@
+<div *ngIf="!error" class="main-problems pt-20 pb-20">
+    <h2>Các bài nộp</h2>
+    <hr class="custom-divider">
+    <div class="mt-4">
+        <nz-pagination (nzPageIndexChange)="onPageIndexChange($event)" [nzPageIndex]="index" [nzPageSize]="pageSize"
+            [nzTotal]="total"></nz-pagination>
+    </div>
+    <div class="main-content">
+        <div class="table-content ml-0 mx-auto overflow-hidden rounded-lg">
+            <table class="w-full border-collapse border border-gray-300">
+                <thead class="bg-gray-800 text-white">
+                    <tr>
+                        <th class="border border-gray-300 px-4 py-2" style="width: 11%;">Kết quả</th>
+                        <th class="border border-gray-300 px-4 py-2">Thông tin nộp bài</th>
+                        <th class="border border-gray-300 px-4 py-2" style="width: 10%;">Thời gian</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let submission of submissionList">
+                        <td [ngClass]="{'bg-green-400': submission!.result === 'ACCEPTED',
+                            'bg-red-400' : submission!.result !== 'ACCEPTED'}"
+                            class="border border-gray-300 px-4 py-2 text-center text-base bold">
+                            <span
+                                *ngIf="check(submission.result)">{{submission.rightTest}}/{{submission.totalTest}}</span>
+                            <span *ngIf="!check(submission.result)">--/--</span>
+                            <p class="text-sm">{{adjustingString(submission.result)}} |
+                                {{normalizeString(submission.language)}}</p>
+                        </td>
+                        <td class="border border-gray-300 px-4 py-2">
+                            <div class="flex items-center justify-between">
+                                <a (click)="redirect(submission.problemId)" class="text-xl">{{submission.title}}</a>
+                                <a (click)="click(submission.id)"><mat-icon class="text-black">visibility</mat-icon></a>
+                            </div>
+                            <span class="text-base">{{submission.name}}, </span>
+                            <span class="text-base">{{submission.createdAt}}</span>
+                        </td>
+                        <td *ngIf="check(submission.result)"
+                            class="border border-gray-300 px-4 py-2 text-center text-base bold">
+                            {{formatNumber(submission.time)}}s
+                            <p class="text-sm">{{formatNumber(submission.memory)}} MB</p>
+                        </td>
+                        <td *ngIf="!check(submission.result)"
+                            class="border border-gray-300 px-4 py-2 text-center text-base bold">
+                            ---
+                            <p class="text-sm">---</p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="pt-20" *ngIf="error">
+    <h1 class="text-black flex justify-center items-center">Không tìm thấy trang</h1>
+
+</div>

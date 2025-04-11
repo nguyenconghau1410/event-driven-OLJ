@@ -1,0 +1,54 @@
+<div *ngIf="!check" class="main-content pb-20">
+    <div class="mt-4">
+        <span class="text-xl text-black"><a (click)="goBack()">Quản lý Contest</a> > </span><span
+            class="text-xl">{{email}}</span>
+    </div>
+    <div *ngIf="total > pageSize" class="mt-4">
+        <nz-pagination (nzPageIndexChange)="onPageIndexChange($event)" [nzPageIndex]="pageIndex" [nzPageSize]="pageSize"
+            [nzTotal]="total"></nz-pagination>
+    </div>
+    <div class="mt-4 table-content  ml-0 mx-auto overflow-auto">
+        <table class="w-full border-collapse border border-gray-300">
+            <thead class="bg-gray-100 text-black">
+                <tr>
+                    <th class="text-left border border-gray-300 px-4 py-2" style="width: 10%;">ID</th>
+                    <th class="border border-gray-300 px-4 py-2" style="width: 15%;">Tên Contest</th>
+                    <th class="border border-gray-300 px-4 py-2" style="width: 15%;">Start & End Time</th>
+                    <th class="border border-gray-300 px-4 py-2" style="width: 7%;">Tham gia</th>
+                    <th class="border border-gray-300 px-4 py-2" style="width: 7%;">Số Problems</th>
+                    <th class="border border-gray-300 px-4 py-2" style="width: 7%;">Số Submissions</th>
+                    <th class="border border-gray-300 px-4 py-2" style="width: 5%;"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let data of dataList;let i = index"
+                    class="text-center border-bottom hover:bg-gray-100 cursor-pointer">
+                    <td class="text-left px-4 py-2"><a (click)="redirect(data.contest.id)">{{data.contest.id}}</a></td>
+                    <td class="px-4 py-2"><a (click)="redirect(data.contest.id)">{{data.contest.title}}</a></td>
+                    <td class="px-4 py-2">
+                        <span>{{data.contest.startTime}}, {{data.contest.hourStart}}</span><br>
+                        <span>{{data.contest.endTime}}, {{data.contest.hourEnd}}</span>
+                    </td>
+                    <td class="px-4 py-2">{{data.contest.participants.length}}</td>
+                    <td class="px-4 py-2">{{data.contest.problems.length}}</td>
+                    <td class="px-4 py-2">{{data.submissions}}</td>
+                    <td class="text-left px-4 py-2"><a (click)="showModal(i)"><mat-icon
+                                style="vertical-align: middle; color: red;" title="Xóa user">close</mat-icon></a></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<nz-modal [(nzVisible)]="isVisible" nzTitle="Thông báo" [nzOkText]="textOk" [nzCancelText]="textCancel"
+    (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
+    <ng-container *nzModalContent>
+        <p>Bạn chắc chắn muốn xóa contest này?</p>
+        <p>Khi xóa thì tất cả các dữ liệu liên quan đến contest đều bị xóa kể cả lịch sử nộp bài của các thành viên.</p>
+    </ng-container>
+</nz-modal>
+
+<div class="pt-20" *ngIf="check">
+    <h1 class="text-black flex justify-center items-center">Không tìm thấy trang</h1>
+
+</div>

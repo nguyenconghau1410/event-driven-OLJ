@@ -1,0 +1,79 @@
+<div *ngIf="problem" class="main-problems pt-16">
+    <h2>{{problem!.title}}</h2>
+    <hr class="custom-divider">
+    <div class="main-content flex mt-2">
+        <div class="w-5/6">
+            <div class="text-base" [innerHTML]="getSafeHtml(problem!.description)"></div>
+            <span class="text-2xl font-bold">Input</span>
+            <hr class="custom-divider mt-2 mb-2">
+            <div class="text-base" [innerHTML]="getSafeHtml(problem!.input)"></div>
+            <span class="text-2xl font-bold">Output</span>
+            <hr class="custom-divider mt-2 mb-2">
+            <div class="text-base" [innerHTML]="getSafeHtml(problem!.output)"></div>
+            <span class="text-2xl font-bold">Constraints </span>
+            <hr class="custom-divider mt-2 mb-2">
+            <div class="text-base" [innerHTML]="getSafeHtml(problem!.constraints)"></div>
+            <div *ngFor="let sample of problem!.sample; let i = index">
+                <span class="text-2xl font-bold" *ngIf="i > 0">Sample input {{i}}</span>
+                <span class="text-2xl font-bold">Sample input</span>
+                <hr class="custom-divider mt-2 mb-4">
+                <pre class="bg-gray-100 w-full rounded-lg flex items-center">
+                <code class="text-left pt-2 pl-4 pb-2" style="white-space: pre-line;"> {{sample['inputData']}}
+                </code>
+            </pre>
+                <span class="text-2xl font-bold" *ngIf="i > 0">Sample Output {{i}}</span>
+                <span class="text-2xl font-bold">Sample Output</span>
+                <hr class="custom-divider mt-2 mb-4">
+                <pre class="bg-gray-100 w-full rounded-lg flex items-center">
+                <code class="text-left pt-2 pl-4 pb-2" style="white-space: pre-line;">{{sample['outputData']}}</code>
+            </pre>
+            </div>
+        </div>
+        <div class="w-1/6 ml-8">
+            <button [routerLink]="['../', problem!.id, 'submit']"
+                class="w-full bg-button bg-button-hover:hover text-white font-bold py-2 px-4 rounded">
+                Gửi bài giải
+            </button>
+            <hr *ngIf="check()" class="custom-divider mt-4 mb-4">
+            <p class="text-sm" (click)="redirect('me')" *ngIf="check()"><a>Danh sách bài nộp</a></p>
+            <p class="text-sm" (click)="redirect('other')" *ngIf="check()"><a>Các bài nộp của người khác</a></p>
+            <hr class="custom-divider mt-4 mb-4">
+            <p class="text-sm font-bold">
+                <mat-icon style="vertical-align: middle;">schedule</mat-icon>
+                Giới hạn thời gian:
+                <span class="font-normal">{{problem!.timeLimit}} s</span>
+            </p>
+            <p class="text-sm font-bold">
+                <mat-icon style="vertical-align: middle;">storage</mat-icon>
+                Giới hạn bộ nhớ:
+                <span class="font-normal">{{problem!.memoryLimit}} MB</span>
+            </p>
+            <p class="text-sm font-bold">
+                <mat-icon style="vertical-align: middle;">keyboard</mat-icon>
+                Input:
+                <span class="font-normal">stdin</span>
+            </p>
+            <p class="text-sm font-bold">
+                <mat-icon style="vertical-align: middle;">description</mat-icon>
+                Output:
+                <span class="font-normal">stdout</span>
+            </p>
+            <hr class="custom-divider mt-4 mb-4">
+            <p class="text-sm font-bold">
+                <mat-icon style="vertical-align: middle;">category</mat-icon>
+                Dạng bài:
+                <span class="font-normal">Chưa phân loại</span>
+            </p>
+            <p class="text-sm font-bold">
+                <mat-icon style="vertical-align: middle;">language</mat-icon>
+                Ngôn ngữ:
+                <span class="font-normal">C++, Java, Python</span>
+            </p>
+        </div>
+    </div>
+</div>
+
+<div class="pt-20" *ngIf="!problem">
+    <h1 class="text-black flex justify-center items-center">Không tìm thấy trang</h1>
+
+</div>

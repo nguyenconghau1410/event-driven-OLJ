@@ -1,0 +1,75 @@
+<nav class="fixed top-0 left-0 right-0 bg-black z-40">
+    <div class="flex items-center">
+        <div class="hidden lg:block flex-shrink-0">
+            <a href="#"><img src="assets/images/logo.png" alt="" width="130"></a>
+        </div>
+        <div class="expand flex-shrink-0">
+            <a (click)="toggleMenu()"><mat-icon style="vertical-align: middle;">menu</mat-icon></a>
+        </div>
+        <div class="hidden lg:block flex-grow">
+            <ul class="flex">
+                <li class="divider"></li>
+                <li><a href="/problems"
+                        class="text-white hover:text-gray-300 font-bold hover:bg-gray-600 pt-4 pb-8 px-4">DANH SÁCH
+                        BÀI</a></li>
+                <li><a href="/submissions"
+                        class="text-white hover:text-gray-300 font-bold hover:bg-gray-600 pt-4 pb-8 px-4">CÁC
+                        BÀI
+                        NỘP</a>
+                </li>
+                <li><a href="/users"
+                        class="text-white hover:text-gray-300 font-bold hover:bg-gray-600 pt-4 pb-8 px-4">THÀNH
+                        VIÊN</a>
+                </li>
+                <li><a href="/contests"
+                        class="text-white hover:text-gray-300 font-bold hover:bg-gray-600 pt-4 pb-8 px-4">CONTEST</a>
+                </li>
+            </ul>
+        </div>
+        <div class="hidden lg:block ml-auto" *ngIf="isLoggedIn === false">
+            <ul class="flex">
+                <li>
+                    <a href="/login" class="text-white font-bold pt-4 pb-8 px-4">ĐĂNG NHẬP</a>
+                </li>
+            </ul>
+        </div>
+        <div class="ml-auto lg:mr-4" *ngIf="isLoggedIn">
+            <ul class="flex">
+                <li class="relative">
+                    <a href="/profile"
+                        class="text-white hover:text-gray-300 font-bold hover:bg-gray-600 pt-4 pb-8 px-4">
+                        <span class="font-thin">Xin chào,</span> {{name!}}
+                    </a>
+                    <div class="absolute bg-white mt-7 py-2 w-40 border shadow-lg z-10 options">
+                        <a href="/profile" class="block px-4 py-2 text-gray-800">Thông tin cá nhân</a>
+                        <a href="/admin" *ngIf="user.role!.code === 'ADMIN'"
+                            class="block px-4 py-2 text-gray-800">Administation</a>
+                        <a href="/administration" *ngIf="user.role!.code !== 'STUDENT'"
+                            class="block px-4 py-2 text-gray-800">Quản lý problems </a>
+                        <a href="/my-contest" *ngIf="user.role!.code !== 'STUDENT'"
+                            class="block px-4 py-2 text-gray-800">Quản lý contests </a>
+                        <a href="/history-contest" class="block px-4 py-2 text-gray-800">Lịch sử contests</a>
+                        <a href="/my-submission" class="block px-4 py-2 text-gray-800">Các bài nộp</a>
+                        <a (click)="signOut()" class="block px-4 py-2 text-gray-800">Đăng xuất</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<div *ngIf="menuOpen" class="fixed mt-16 left-0 z-50 dl">
+    <ul nz-menu nzMode="inline" [nzTheme]="'dark'">
+        <li nz-menu-item><a href="/problems">DANH SÁCH BÀI</a></li>
+        <li nz-menu-item><a href="/submissions">CÁC BÀI NỘP</a></li>
+        <li nz-menu-item><a href="/users">THÀNH VIÊN</a></li>
+        <li nz-menu-item><a href="contests">CONTEST</a></li>
+    </ul>
+</div>
+<nz-modal [(nzVisible)]="isVisible" nzTitle="Thông báo" [nzOkText]="textOk" [nzCancelText]="textClose"
+    (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
+    <ng-container *nzModalContent>
+        <p>Gửi từ: {{message.title}}</p>
+        <p>Nội dung: {{message.content}}</p>
+    </ng-container>
+</nz-modal>
+<router-outlet></router-outlet>

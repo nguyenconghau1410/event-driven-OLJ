@@ -1,0 +1,45 @@
+<div *ngIf="!check" class="main-problems pt-20">
+    <h2>Bảng xếp hạng</h2>
+    <hr class="custom-divider">
+    <div *ngIf="total > pageSize" class="mt-4">
+        <nz-pagination (nzPageIndexChange)="onPageIndexChange($event)" [nzPageIndex]="pageIndex" [nzPageSize]="pageSize"
+            [nzTotal]="total"></nz-pagination>
+    </div>
+    <div class="main-content">
+        <div class="flex flex-wrap">
+            <table class="w-full border-collapse border border-gray-300">
+                <thead class="bg-gray-800 text-white">
+                    <tr>
+                        <th class="border border-gray-300 px-4 py-2" style="width: 10%;">Hạng</th>
+                        <th class="border border-gray-300 px-4 py-2">Tên truy cập</th>
+                        <th class="border border-gray-300 px-4 py-2" style="width: 10%;">Số bài</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let top of tops; let i = index">
+                        <td [ngClass]="{'bg-green-400': yourself(top['userId'])}"
+                            class="border border-gray-300 px-4 py-2 text-center text-base bold">
+                            {{i + 1 + pageSize * (pageIndex - 1)}}
+                        </td>
+                        <td class="border border-gray-300 px-4 py-2">
+                            <a (click)="redirect(top['userId'])" class="text-lg">{{top['userId']}}</a><br>
+                            <span class="text-base">{{top['name']}} - {{top['classname']}} - {{top['faculty']}}</span>
+                        </td>
+                        <td class="border border-gray-300 px-4 py-2 text-center text-base bold">
+                            {{top['totalSolutions']}}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div *ngIf="total > pageSize" class="mt-4">
+        <nz-pagination (nzPageIndexChange)="onPageIndexChange($event)" [nzPageIndex]="pageIndex" [nzPageSize]="pageSize"
+            [nzTotal]="total"></nz-pagination>
+    </div>
+</div>
+
+<div class="pt-20" *ngIf="check">
+    <h1 class="text-black flex justify-center items-center">Không tìm thấy trang</h1>
+
+</div>

@@ -1,0 +1,28 @@
+spring:
+  data:
+    mongodb:
+      uri: mongodb+srv://racingboy560:nmtt0981988752@cluster0.la20psk.mongodb.net/online-judge?retryWrites=true&w=majority&appName=Cluster0
+#      host: localhost
+#      port: 27017
+#      database: online-judge
+#      auto-index-creation: true
+  servlet:
+    multipart:
+      max-file-size: 50MB
+      max-request-size: 50MB
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+    virtual-host: /
+    listener:
+      simple:
+        retry:
+          enabled: true
+          initial-interval: 1000
+          max-attempts: 3
+          max-interval: 10000
+
+server:
+  port: 8088

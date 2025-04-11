@@ -1,0 +1,105 @@
+<div class="main-problems pt-20 pb-20">
+    <h2>Các kỳ thi</h2>
+    <hr class="custom-divider">
+    <div class="mt-4">
+        <p class="text-xl font-bold">Các kỳ thi sắp tới</p>
+        <hr class="custom-divider mb-2">
+        <p *ngIf="contestFuture.length === 0" class="italic">Chưa có kỳ thi được lên lịch trong tương lai</p>
+        <div class="mt-4" *ngIf="(total1 > pageSize)">
+            <nz-pagination (nzPageIndexChange)="onPageIndexChange($event)" [nzPageIndex]="pageIndex1"
+                [nzPageSize]="pageSize" [nzTotal]="total1"></nz-pagination>
+        </div>
+        <div *ngIf="contestFuture.length !== 0" class="main-content">
+            <div class="">
+                <div class="ml-0 mx-auto overflow-auto rounded-lg">
+                    <table class="w-full border-collapse border border-gray-300">
+                        <thead class="bg-gray-800 text-white text-base">
+                            <tr>
+                                <th class="border border-gray-300 px-4 py-2">Kỳ thi</th>
+                                <th class="border border-gray-300 px-4 py-2" style="width: 10%;">Thành viên</th>
+                                <th class="text-center border border-gray-300 px-4 py-2" style="width: 10%;">Đã đăng ký
+                                </th>
+                                <th class="border border-gray-300 px-4 py-2" style="width: 20%;"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let contest of contestFuture; let i = index">
+                                <td class="border border-gray-300 px-4 py-2">
+                                    <a (click)="redirectLandingPage(contest.id)" class="text-xl">{{contest.title}}</a>
+                                    <div class="mt-2 text-gray-500">
+                                        <span>Ngày bắt đầu: {{contest.startTime}}, {{contest.hourStart}}</span><br>
+                                        <span>Kết thúc: {{contest.endTime}}, {{contest.hourEnd}}</span>
+                                    </div>
+                                </td>
+                                <td class="text-center text-base border border-gray-300 px-4 py-2">
+                                    {{contest.participants.length}} <span *ngIf="isParticipant(i)">(p)</span>
+                                </td>
+                                <td class="text-center text-base border border-gray-300 px-4 py-2">
+                                    {{contest.signups.length}}</td>
+                                <td class="text-center border border-gray-300 px-4 py-2">
+                                    <button *ngIf="!checkSignUp(i)" (click)="signup(i)"
+                                        class="mt-4 bg-button bg-button-hover:hover text-white py-2 px-4 rounded">
+                                        Đăng ký
+                                    </button>
+                                    <button *ngIf="checkSignUp(i) && !isParticipant(i)"
+                                        class="mt-4 bg-button bg-button-hover:hover text-white py-2 px-4 rounded">
+                                        Đã đăng ký
+                                    </button>
+                                    <button (click)="redirectLandingPage(contest.id)"
+                                        class="ml-2 mt-4 bg-button bg-button-hover:hover text-white py-2 px-4 rounded">
+                                        {{ isParticipant(i) ? "Tham gia" : "Xem" }}
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="mt-12">
+        <p class="text-xl font-bold">Các kỳ thi đã qua</p>
+        <hr class="custom-divider mb-2">
+    </div>
+    <div class="mt-4">
+        <nz-pagination (nzPageIndexChange)="onPageIndexChange($event)" [nzPageIndex]="pageIndex" [nzPageSize]="pageSize"
+            [nzTotal]="total"></nz-pagination>
+    </div>
+    <div class="main-content">
+        <div class="">
+            <div class="ml-0 mx-auto overflow-hidden rounded-lg">
+                <table class="w-full border-collapse border border-gray-300">
+                    <thead class="bg-gray-800 text-white text-base">
+                        <tr>
+                            <th class="border border-gray-300 px-4 py-2">Kỳ thi</th>
+                            <th class="text-center border border-gray-300 px-4 py-2" style="width: 10%;">Thành viên</th>
+                            <th class="border border-gray-300 px-4 py-2" style="width: 15%;"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let contest of contestList">
+                            <td class="border border-gray-300 px-4 py-2">
+                                <a (click)="redirectLandingPage(contest.id)" class="text-xl">{{contest.title}}</a>
+                                <div class="mt-2 text-gray-500" *ngIf="!contest.noTime">
+                                    <span>Ngày bắt đầu: {{contest.startTime}}, {{contest.hourStart}}</span><br>
+                                    <span>Kết thúc: {{contest.endTime}}, {{contest.hourEnd}}</span>
+                                </div>
+                                <div class="mt-2 text-gray-500" *ngIf="contest.noTime">
+                                    <span>Contest không có thời gian kết thúc.</span>
+                                </div>
+                            </td>
+                            <td class="text-center text-base border border-gray-300 px-4 py-2">
+                                {{contest.participants.length}}</td>
+                            <td class="text-center border border-gray-300 px-4 py-2">
+                                <button (click)="redirectLandingPage(contest.id)"
+                                    class="mt-4 bg-button bg-button-hover:hover text-white py-2 px-4 rounded">
+                                    Xem
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

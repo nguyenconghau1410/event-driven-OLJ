@@ -1,0 +1,55 @@
+<div *ngIf="check" class="main-content pt-20">
+    <div class="flex justify-between">
+        <div>
+            <h2>Quản lí Problem</h2>
+        </div>
+        <div><button (click)="createNew()"
+                class="mt-4 w-full bg-button bg-button-hover:hover text-white py-2 px-4 rounded">
+                Tạo mới
+            </button></div>
+    </div>
+    <hr class="custom-divider">
+    <div class="mt-4">
+        <nz-pagination (nzPageIndexChange)="onPageIndexChange($event)" [nzPageIndex]="pageIndex" [nzPageSize]="pageSize"
+            [nzTotal]="total"></nz-pagination>
+    </div>
+    <div class="mt-4 table-content  ml-0 mx-auto overflow-auto">
+        <table class="w-full border-collapse border border-gray-300 text-left">
+            <thead class="bg-gray-100 text-black">
+                <tr>
+                    <th class="border border-gray-300 px-4 py-2" style="width: 15%;">ID</th>
+                    <th class="border border-gray-300 px-4 py-2">Bài</th>
+                    <th class="border border-gray-300 px-4 py-2" style="width: 10%;">Trạng thái</th>
+                    <th class="border border-gray-300 px-4 py-2" style="width: 15%;">Thao tác</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let problem of problems; let i = index">
+                    <td class="border border-gray-300 px-4 py-2"><a (click)="redirect(problem.id)">{{problem.id}}</a>
+                    </td>
+                    <td class="text-base border border-gray-300 px-4 py-2"><a
+                            (click)="redirect(problem.id)">{{problem.title}}</a>
+                    </td>
+                    <td class="text-base border border-gray-300 px-4 py-2">{{problem.state}}</td>
+                    <td class="border border-gray-300 px-4 py-2">
+                        <a (click)="updateState(problem.id)"><mat-icon style="vertical-align: middle;"
+                                title="Turn on public mode">radio_button_checked</mat-icon></a>
+                        <a (click)="edit(problem.id)"><mat-icon style="vertical-align: middle;"
+                                title="Edit">edit</mat-icon></a>
+                        <a (click)="delete(problem.id, i)"><mat-icon style="vertical-align: middle;"
+                                title="Delete">delete</mat-icon></a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<nz-modal [(nzVisible)]="isVisible" nzTitle="Thông báo" [nzCancelText]="textCancel" [nzOkText]="textOk"
+    (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
+    <p *nzModalContent>Bạn muốn xóa Problem này ?
+    </p>
+</nz-modal>
+<div class="pt-20" *ngIf="check === false">
+    <h1 class="text-black flex justify-center items-center">Không tìm thấy trang</h1>
+
+</div>

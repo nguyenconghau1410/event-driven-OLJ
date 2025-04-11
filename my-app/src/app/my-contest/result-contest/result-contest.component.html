@@ -1,0 +1,95 @@
+<div *ngIf="!error" class="main-problems pt-20 pb-20">
+    <h2>Kết quả</h2>
+    <hr class="custom-divider">
+    <span *ngIf="!detailContest" class="text-xl">Không tìm thấy dữ liệu!</span>
+    <div class="mt-10">
+        <div>
+            <span class="text-xl font-bold">Chi tiết bài nộp</span>
+            <table class="mt-2 lg:w-3/5 font-normal">
+                <tbody>
+                    <tr class="text-base border-b border-gray-500 px-4 py-2">
+                        <td>Contest:</td>
+                        <td><a class="text-black"
+                                (click)="redirect(detailContest!.contestId)">{{detailContest!.nameContest}}</a></td>
+                    </tr>
+                    <tr class="bg-gray-200 text-base border-b border-gray-500 px-4 py-2">
+                        <td>Problem:</td>
+                        <td>{{detailContest!.title}}</td>
+                    </tr>
+                    <tr class="text-base border-b border-gray-500 px-4 py-2">
+                        <td>Người nộp:</td>
+                        <td>{{detailContest!.name}}</td>
+                    </tr>
+                    <tr class="bg-gray-200 text-base border-b border-gray-500 px-4 py-2">
+                        <td>Thời gian nộp:</td>
+                        <td>{{detailContest!.createdAt}}</td>
+                    </tr>
+                    <tr class="text-base border-b border-gray-500 px-4 py-2">
+                        <td>Ngôn ngữ:</td>
+                        <td>{{normalizeString(detailContest!.language)}}</td>
+                    </tr>
+                    <tr class="bg-gray-200 text-base border-b border-gray-500 px-4 py-2">
+                        <td>Kết quả:</td>
+                        <td *ngIf="!detailContest!.result"><span nz-icon nzType="loading" nzTheme="outline"></span></td>
+                        <td *ngIf="detailContest!.result">
+                            <div class="inline-flex px-2" [ngClass]="{'bg-green-400': detailContest!.result === 'ACCEPTED',
+                                              'bg-red-400' : detailContest!.result !== 'ACCEPTED'}">
+                                {{detailContest!.result}}</div>
+                        </td>
+                    </tr>
+                    <tr class="text-base border-b border-gray-500 px-4 py-2">
+                        <td>Điểm:</td>
+                        <td *ngIf="detailContest!.point === null"><span nz-icon nzType="loading"
+                                nzTheme="outline"></span></td>
+                        <td *ngIf="detailContest!.point !== null">
+                            {{formatNumber(detailContest!.point)}}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="mt-4">
+            <span class="text-xl font-bold">Kết quả thực hiện</span>
+            <div class="table-content ml-0 mx-auto mt-4">
+                <table class="lg:w-3/5 border-collapse border border-black">
+                    <thead class="text-black">
+                        <tr>
+                            <th class="border border-black px-4 py-2" style="width: 10%;">Test</th>
+                            <th class="border border-black px-4 py-2" style="width: 10%;">Kết quả</th>
+                            <th class="border border-black px-4 py-2" style="width: 10%;">Thời gian</th>
+                            <th class="border border-black px-4 py-2" style="width: 10%;">Bộ nhớ</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let result of resultList; let i = index">
+                            <td class="border border-black px-4 py-2">#{{i + 1}}</td>
+                            <td [ngClass]="{'bg-green-400': result.result === 'ACCEPTED',
+                                            'bg-red-400': result.result !== 'ACCEPTED'}"
+                                class="text-center border border-black px-4 py-2">{{result.result}}</td>
+                            <td *ngIf="check(result.result)" class="text-center border border-black px-4 py-2">
+                                {{formatNumber(result.time)}} s</td>
+                            <td *ngIf="!check(result.result)" class="text-center border border-black px-4 py-2">---</td>
+                            <td *ngIf="check(result.result)" class="text-center border border-black px-4 py-2">
+                                {{formatNumber(result.memory)}} MB
+                            </td>
+                            <td *ngIf="!check(result.result)" class="text-center border border-black px-4 py-2">---</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="mt-4">
+            <span class="text-xl font-bold">Source Code</span>
+            <div class="mt-4"></div>
+            <div class="border border-black lg:w-4/5">
+                <ngx-codemirror [options]="options" [ngModel]="code" [disabled]="true"
+                    [autoFocus]="false"></ngx-codemirror>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div *ngIf="error" class="pt-20">
+    <h1 class="text-black flex justify-center items-center">Không tìm thấy trang</h1>
+
+</div>

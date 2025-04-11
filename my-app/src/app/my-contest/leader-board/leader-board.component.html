@@ -1,0 +1,50 @@
+<div *ngIf="error === ''" class="main-content pt-20">
+    <h2>Bảng xếp hạng</h2>
+    <hr class="custom-divider">
+    <div *ngIf="total > pageSize" class="mt-4">
+        <nz-pagination (nzPageIndexChange)="onPageIndexChange($event)" [nzPageIndex]="pageIndex" [nzPageSize]="pageSize"
+            [nzTotal]="total"></nz-pagination>
+    </div>
+    <div *ngIf="leaderBoardList.length === 0" class="text-xl mt-4 flex justify-center">Chưa có xếp hạng</div>
+    <div *ngIf="leaderBoardList.length !== 0" class="mt-4 table-content  ml-0 mx-auto overflow-auto">
+        <table class="w-full border-collapse border border-gray-300">
+            <thead class="bg-gray-100 text-black">
+                <tr>
+                    <th class="border border-gray-300 px-4 py-2" style="width: 5%;">Rank</th>
+                    <th class="text-left border border-gray-300 px-4 py-2" style="width: 15%;">ID</th>
+                    <th class="text-left border border-gray-300 px-4 py-2" style="width: 15%;">Tên thành viên</th>
+                    <th class="border border-gray-300 px-4 py-2" style="width: 7%;">Tổng điểm</th>
+                    <th class="border border-gray-300 px-4 py-2" style="width: 7%;">Solved</th>
+                    <th class="border border-gray-300 px-4 py-2" style="width: 5%;"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngIf="topRating" class="text-center border-bottom bg-green-300 hover:bg-green-300 cursor-pointer">
+                    <td class="px-4 py-2">{{topRating['index'] + 1}}.</td>
+                    <td class="text-left px-4 py-2">{{topRating['info']['id']}} (your-self)</td>
+                    <td class="text-left px-4 py-2">{{topRating['info']['name']}}</td>
+                    <td class="px-4 py-2">{{topRating['info']['totalScore']}}</td>
+                    <td class="px-4 py-2">{{topRating['info']['totalSolutions']}}</td>
+                    <td class="px-4 py-2"><a (click)="redirect(topRating['info']['id'])">View</a></td>
+                </tr>
+                <tr *ngFor="let top of leaderBoardList; let i = index"
+                    class="text-center border-bottom hover:bg-gray-100 cursor-pointer">
+                    <td class="px-4 py-2">{{i + 1 + (pageIndex - 1) * pageSize}}.</td>
+                    <td class="text-left px-4 py-2">{{top['id']}}</td>
+                    <td class="text-left px-4 py-2">{{top['name']}}</td>
+                    <td class="px-4 py-2">{{top['totalScore']}}</td>
+                    <td class="px-4 py-2">{{top['totalSolutions']}}</td>
+                    <td class="px-4 py-2"><a (click)="redirect(top['id'])">View</a></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div *ngIf="total > pageSize" class="mt-4">
+        <nz-pagination (nzPageIndexChange)="onPageIndexChange($event)" [nzPageIndex]="pageIndex" [nzPageSize]="pageSize"
+            [nzTotal]="total"></nz-pagination>
+    </div>
+</div>
+<div class="pt-20" *ngIf="error">
+    <h1 class="text-black flex justify-center items-center">Không tìm thấy trang</h1>
+
+</div>

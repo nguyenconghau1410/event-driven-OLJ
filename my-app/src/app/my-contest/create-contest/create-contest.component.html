@@ -1,0 +1,81 @@
+<div class="pt-20">
+    <div class="mt-4 mb-6">
+        <span class="ml-200"><a class="text-gray-700" href="/my-contest">Quản lí Contest</a></span> > <span
+            class="text-gray-700">Tạo
+            contest</span>
+    </div>
+    <hr class="custom-divider">
+    <div class="main-content mt-4">
+        <span class="text-3xl">Tạo Contest</span>
+        <div class="mt-10 flex">
+            <div class="w-1/4">
+                <span class="text-base"> Tên Contest</span>
+                <span class="text-red-400"> *</span>
+            </div>
+            <div class="w-3/4">
+                <input type="text" [(ngModel)]="contest.title"
+                    class="border border-gray-300 px-3 py-1 w-1/3 rounded transition duration-300 ease-in-out hover:border-blue-500">
+            </div>
+        </div>
+        <div class="mt-10 flex">
+            <div class="w-1/4">
+                <span class="text-base"> Mô tả</span>
+                <span class="text-red-400"> *</span>
+            </div>
+            <div class="w-3/4">
+                <ckeditor [(ngModel)]="contest.description" [editor]="Editor"></ckeditor>
+            </div>
+        </div>
+        <div class="mt-10 flex">
+            <div class="w-1/4">
+                <span class="text-base">Thời gian bắt đầu</span>
+                <span class="text-red-400"> *</span>
+            </div>
+            <div class="w-3/4">
+                <input type="date" id="datePickerStart" [(ngModel)]="contest.startTime"
+                    class="border border-gray-300 px-3 py-1 w-1/3 rounded transition duration-300 ease-in-out hover:border-blue-500">
+                <span class="ml-4 mr-4">at</span>
+                <input type="time" [(ngModel)]="contest.hourStart"
+                    class="border border-gray-300 px-3 py-1 w-1/5 rounded transition duration-300 ease-in-out hover:border-blue-500">
+            </div>
+        </div>
+        <div class="mt-10 flex" *ngIf="!checkbox">
+            <div class="w-1/4">
+                <span class="text-base">Thời gian kết thúc</span>
+                <span class="text-red-400"> *</span>
+            </div>
+            <div class="w-3/4">
+                <input type="date" id="datePickerEnd" [(ngModel)]="contest.endTime"
+                    class="border border-gray-300 px-3 py-1 w-1/3 rounded transition duration-300 ease-in-out hover:border-blue-500">
+                <span class="ml-4 mr-4">at</span>
+                <input type="time" [(ngModel)]="contest.hourEnd"
+                    class="border border-gray-300 px-3 py-1 w-1/5 rounded transition duration-300 ease-in-out hover:border-blue-500">
+            </div>
+        </div>
+        <div class="mt-4 flex">
+            <div class="w-1/4">
+            </div>
+            <div class="w-3/4">
+                <input type="checkbox" (click)="clickCheckBox()" class="larger-checkbox ml-1">
+                <span class="ml-2">Contest này không có thời gian kết thúc</span>
+            </div>
+        </div>
+        <div class="mt-10 flex">
+            <div class="w-1/4">
+                <span class="text-base">Mode</span>
+            </div>
+            <div class="w-3/4">
+                <select id="mySelect" [(ngModel)]="contest.mode"
+                    class="border border-gray-300 rounded-md px-4 py-2 w-2/4">
+                    <option value="" selected>Chọn mode</option>
+                    <option value="NRR">Không cần đăng ký trước các thành viên tham gia</option>
+                    <option value="RR">Phải đăng ký trước các thành viên tham gia</option>
+                </select>
+            </div>
+        </div>
+        <button (click)="create()" class="mt-4 bg-button bg-button-hover:hover text-white py-2 px-4 rounded">
+            Get Started
+        </button>
+    </div>
+    <hr class="custom-divider mt-20 pb-10">
+</div>

@@ -1,0 +1,90 @@
+<div *ngIf="check && !isTaskView" class="pt-20 pb-20">
+    <div class="mt-4 mb-6 flex">
+        <div class="w-2/3">
+            <a class="ml-200 text-gray-500">{{contest.title}}</a>
+        </div>
+        <div class="w-1/3">
+            <span class="text-black" *ngIf="!contest.noTime">{{countdown}}</span>
+        </div>
+    </div>
+    <hr class="custom-divider">
+    <div class="mt-4 mb-4">
+        <span class="main-content font-medium text-2xl">{{contest.title}}</span>
+    </div>
+    <hr class="custom-divider">
+    <div class="mt-4" *ngIf="(!contest.noTime && contest.finished)">
+        <p class="ml-200 text-base text-gray-500">Cuộc thi đã kết thúc, nếu bạn muốn làm bài thì các bài nộp sẽ không
+            lưu vào lịch sử
+            cuộc
+            thi mà lưu
+            vào lịch sử nộp bài của bạn.</p>
+    </div>
+    <div class="main-content mt-4 flex">
+        <div class="w-2/3">
+            <span class="text-base font-medium">Các bài thi</span>
+            <div class="mt-4">
+                <nz-pagination (nzPageIndexChange)="onPageIndexChange($event)" [nzPageIndex]="pageIndex"
+                    [nzPageSize]="pageSize" [nzTotal]="total"></nz-pagination>
+            </div>
+            <ul *ngFor="let problem of problems">
+                <li class="mt-4 w-full border border-gray-300 px-6 py-4 rounded">
+                    <div class="flex items-center">
+                        <div class="w-5/6">
+                            <a (click)="redirectTask(problem.id)"><span
+                                    class="text-xl text-green-400">{{problem.title}}</span></a>
+                        </div>
+                        <div class="w-1/6 flex justify-end">
+                            <a (click)="redirectSubmission(contest.id, '', problem.id)"><mat-icon class="text-gray-400"
+                                    style="vertical-align: middle;" title="Các bài nộp">list</mat-icon></a>
+                        </div>
+                    </div>
+                    <div class="mt-2"></div>
+                    <div class="flex items-center">
+                        <div class="w-1/2">
+                            <span class="">Max Score: <span class="text-gray-500">{{problem.point}}</span></span>
+                        </div>
+                        <div class="w-1/2 flex justify-end">
+                            <button (click)="redirectTask(problem.id)"
+                                class="text-sm font-medium bg-green-400 text-white py-2 px-8 border border-gray-400">
+                                Làm bài
+                            </button>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+            <div class="mt-4">
+                <nz-pagination (nzPageIndexChange)="onPageIndexChange($event)" [nzPageIndex]="pageIndex"
+                    [nzPageSize]="pageSize" [nzTotal]="total"></nz-pagination>
+            </div>
+        </div>
+        <div class="w-1/3 mar">
+            <span *ngIf="topRating" class="text-base font-medium">Tổng điểm:
+                {{topRating['info']['totalScore']}}</span><br>
+            <span *ngIf="topRating" class="text-base font-medium">Solved: {{topRating['info']['totalSolutions']}}</span>
+            <div class="mt-16">
+                <div class="flex items-center">
+                    <a (click)="redirectLeaderBoard()" class="mr-2"><mat-icon class="text-gray-400"
+                            style="vertical-align: middle;">leaderboard</mat-icon></a>
+                    <a (click)="redirectLeaderBoard()" class="font-medium">Bảng xếp hạng</a>
+                </div>
+                <div class="flex items-center mt-2">
+                    <a (click)="redirectSubmission(contest.id, 'a', '')" class="mr-2"><mat-icon class="text-gray-400"
+                            style="vertical-align: middle; font-size: 30px;">list</mat-icon></a>
+                    <a (click)="redirectSubmission(contest.id, 'a', '')" class="font-medium">Tất cả bài nộp</a>
+                </div>
+            </div>
+            <div class="mt-4"></div>
+            <span *ngIf="isAdmin()" class="text-base font-medium">Admin</span>
+            <div *ngIf="isAdmin()" class="mt-2">
+                <a (click)="redirectAmin(contest.id)">Quản lý contest</a>
+                <div class="mt-2"></div>
+                <a (click)="redirectSubmission(contest.id, '', '')">Xem tất cả bài nộp</a>
+            </div>
+        </div>
+    </div>
+</div>
+<app-detail-problem *ngIf="isTaskView"></app-detail-problem>
+<div class="pt-20" *ngIf="check === false">
+    <h1 class="text-black flex justify-center items-center">Không tìm thấy trang</h1>
+
+</div>

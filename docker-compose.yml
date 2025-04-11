@@ -1,0 +1,84 @@
+services:
+  rabbitmq:
+    container_name: message-broker
+    image: rabbitmq:3-management
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+      RABBITMQ_DEFAULT_VHOST: /
+    networks:
+      - rabbitmq-network
+    healthcheck:
+      test: [ "CMD", "rabbitmqctl", "status" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  judge-service-1:
+    container_name: judge-1
+    image: judge-service
+    ports:
+      - "8090:8090"
+    privileged: true
+    command: [ "--spring.rabbitmq.host=message-broker" ]
+    volumes:
+      - data:/app/data
+    networks:
+      - rabbitmq-network
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+
+  judge-service-2:
+    container_name: judge-2
+    image: judge-service
+    ports:
+      - "8092:8092"
+    privileged: true
+    command: [ "--spring.rabbitmq.host=message-broker" ]
+    volumes:
+      - data:/app/data
+    networks:
+      - rabbitmq-network
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+
+  api-service:
+    container_name: api
+    image: api-service
+    ports:
+      - "8088:8088"
+    command: [ "--spring.rabbitmq.host=message-broker" ]
+    networks:
+      - rabbitmq-network
+    volumes:
+      - data:/app/data
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+
+  fe-service:
+    container_name: front-end
+    image: fe-oj
+    ports:
+      - "4200:80"
+    environment:
+      BASE_URL: http://localhost:8088/api/v1
+      BROKER_URL: ws://localhost:8088/ws/websocket
+      SECRET_KEY: concat
+      DOMAIN_NAME: localhost
+    networks:
+      - rabbitmq-network
+volumes:
+  data:
+
+networks:
+  rabbitmq-network:
+    driver: bridge
+
+# docker run -dp 8090:8090 --name judge --privileged -v data:/app/data --network olj_rabbitmq-network  judge-service
+# docker run -dp 8088:8088 --network olj_rabbitmq-network  api-service --spring.rabbitmq.host=message-broker

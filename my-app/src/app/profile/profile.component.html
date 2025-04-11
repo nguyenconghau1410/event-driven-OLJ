@@ -1,0 +1,114 @@
+<div *ngIf="!error" class="main-problems pt-20 h-64">
+    <div class="flex items-center">
+        <div class="w-1/2">
+            <h2>Thông tin cá nhân</h2>
+        </div>
+        <div class="w-1/2">
+            <ul class="flex justify-end">
+                <li (click)="changeTab(0)" class="cursor-pointer px-4 py-2 text-base" [ngClass]="{'rounded-t-md border-b-0 border border-gray-300': index == 0,
+                                'border-b-2': index === 1}">
+                    Thông tin</li>
+                <li (click)="changeTab(1)" class="cursor-pointer px-4 py-2 text-base" [ngClass]="{'rounded-t-md border-b-0 border border-gray-300': index === 1,
+                                'border-b-2': index === 0}">Các bài đã AC</li>
+            </ul>
+        </div>
+    </div>
+    <hr class="custom-divider">
+    <div class="flex mt-2">
+        <div class="lg:w-1/6 sm:1/3">
+            <img class="rounded-xl w-44 h-44" src="{{user!.avatar}}" alt="Hình ảnh">
+            <br>
+            <p class="text-base">
+                <span *ngIf="figure" class="font-bold text-base">Số bài đã giải: {{figure.total}}</span> <br>
+                Hạng: #{{topUser(figure.top)}} <br>
+            </p>
+        </div>
+        <div *ngIf="index === 0" class="w-5/6 h-full ml-4 overflow-auto">
+            <h3 class="text-2xl font-thin">{{user!.name}}
+                <button (click)="openForm()"><span class="text-2xl ml-24" nz-icon nzType="edit"
+                        nzTheme="outline"></span></button>
+            </h3>
+            <p>ID: {{user!.id}}</p>
+            <p>Email: {{user!.email}} </p>
+            <p>Lớp: {{user!.classname}}</p>
+            <p>Khoa: {{user!.faculty}}</p>
+            <hr class="custom-divider w-1/2">
+            <div class="mt-4 flex space-x-16">
+                <a *ngIf="figure">
+                    <div
+                        class="text-white bg-green-400 w-48 h-48 rounded-full flex flex-col justify-center items-center">
+                        <p>Số bài AC</p>
+                        <p>{{figure.totalAC}}</p>
+                    </div>
+                </a>
+                <a href="/my-submission">
+                    <div
+                        class="text-white bg-gray-400 w-48 h-48 rounded-full flex flex-col justify-center items-center">
+                        <p>Tổng số lần nộp bài</p>
+                        <p>{{total}}</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div *ngIf="index === 1" class="w-5/6 h-full ml-4 overflow-auto">
+            <div *ngIf="total > pageSize" class="mt-4 mb-4">
+                <nz-pagination (nzPageIndexChange)="onPageIndexChange($event)" [nzPageIndex]="pageIndex"
+                    [nzPageSize]="pageSize" [nzTotal]="total"></nz-pagination>
+            </div>
+            <table class="w-full border-collapse border border-gray-300">
+                <thead class="bg-gray-100 text-black">
+                    <tr>
+                        <th class="text-left border border-gray-300 px-4 py-2" style="width: 35%;">Tên Problem</th>
+                        <th class="border border-gray-300 px-4 py-2" style="width: 20%;">Kết quả</th>
+                        <th class="border border-gray-300 px-4 py-2" style="width: 20%;">Testcase</th>
+                        <th class="border border-gray-300 px-4 py-2" style="width: 25%;">Thời gian & Bộ nhớ</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let ac of acList" class="text-center border-bottom hover:bg-gray-100 cursor-pointer"
+                        (click)="viewSubmission(ac.id)">
+                        <td class="text-left px-4 py-2">{{ac.title}}</td>
+                        <td class="px-4 py-2">{{ac.result}}</td>
+                        <td class="px-4 py-2">{{ac.rightTest}}/{{ac.totalTest}}</td>
+                        <td class="px-4 py-2">{{fixed(ac.time)}}s / {{fixed(ac.memory)}}MB</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<div class="pt-20" *ngIf="error">
+    <h1 class="text-black flex justify-center items-center">Không tìm thấy trang</h1>
+
+</div>
+<div class="flex items-center justify-center">
+    <div *ngIf="showEditForm"
+        class="absolute top-0 left-0 w-full h-full bg-black bg-opacity-50 flex items-center justify-center">
+        <div class="bg-white p-6 rounded shadow-lg">
+            <h3 class="text-lg font-semibold mb-2">Chỉnh sửa thông tin</h3>
+            <form (ngSubmit)="onSubmit(form)" #form="ngForm" class="space-y-4">
+                <div>
+                    <label for="email" class="block">Tên người dùng:</label>
+                    <input type="text" [(ngModel)]="user!.name" value="#" id="tag" name="name"
+                        class="w-full border rounded p-2" style="width: 300px;">
+                </div>
+                <div>
+                    <label for="class" class="block">Lớp:</label>
+                    <input type="text" [(ngModel)]="user!.classname" id="class" name="classname"
+                        class="w-full border rounded p-2" style="width: 300px;">
+                </div>
+                <div>
+                    <label for="email" class="block">Khoa:</label>
+                    <input type="text" [(ngModel)]="user!.faculty" id="faculty" name="faculty"
+                        class="w-full border rounded p-2" style="width: 300px;">
+                </div>
+
+                <div class="flex justify-end">
+                    <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Save</button>
+                    <button type="button" (click)="closeForm()"
+                        class="bg-gray-300 text-gray-700 px-4 py-2 rounded ml-2">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,160 @@
+<div *ngIf="check" class="main-problems pt-20 pb-20">
+    <div class="flex justify-between">
+        <div>
+            <h2>Add problem</h2>
+        </div>
+        <div><button (click)="addProlem()"
+                class="mt-4 w-full bg-button bg-button-hover:hover text-white py-2 px-4 rounded">
+                Create
+            </button></div>
+    </div>
+    <hr class="custom-divider">
+    <div class="flex mt-2 overflow-auto">
+        <div class="w-5/6 mr-8">
+            <div class="flex">
+                <div class="w-1/3 mr-4">
+                    <span class="text-red-600">*</span> Problem ID <br>
+                    <input [(ngModel)]="problem.id" type="text"
+                        class="mt-4 border border-gray-300 px-3 py-1 w-full rounded transition duration-300 ease-in-out hover:border-blue-500">
+                </div>
+                <div class="w-2/3 ml-4">
+                    <span class="text-red-600">*</span> Title <br>
+                    <input [(ngModel)]="problem.title" type="text"
+                        class="mt-4 border border-gray-300 px-3 py-1 w-full rounded transition duration-300 ease-in-out hover:border-blue-500">
+                </div>
+            </div>
+            <div class="mt-4">
+                <span class="text-red-600">*</span> Description <br>
+                <div class="m-4"></div>
+                <ckeditor [(ngModel)]="problem.description" [editor]="Editor"></ckeditor>
+            </div>
+            <div class="mt-4">
+                <span class="text-red-600">*</span> Input <br>
+                <div class="m-4"></div>
+                <ckeditor [(ngModel)]="problem.input" [editor]="Editor"></ckeditor>
+            </div>
+            <div class="mt-4">
+                <span class="text-red-600">*</span> Output <br>
+                <div class="m-4"></div>
+                <ckeditor [(ngModel)]="problem.output" [editor]="Editor"></ckeditor>
+            </div>
+            <div class="mt-4">
+                <span class="text-red-600">*</span> Constraints <br>
+                <div class="m-4"></div>
+                <ckeditor [(ngModel)]="problem.constraints" [editor]="Editor"></ckeditor>
+            </div>
+            <div class="mt-4">
+                <span class="text-red-600">*</span> Sample Input/Output
+                <a (click)="addSampleIO()" class="text-gray-500"><mat-icon
+                        style="vertical-align: middle;">add_circle</mat-icon></a> <br>
+                <div class="flex" *ngFor="let sampleIO of sampleInputsOutputs; let i = index">
+                    <div *ngIf="i >= 0" class="w-1/2 mr-4">
+                        <textarea
+                            class="mt-4 border border-gray-300 px-3 py-1 w-full rounded transition duration-300 ease-in-out hover:border-blue-500"
+                            [name]="'input-' + i" [id]="'input-' + i"></textarea>
+                    </div>
+                    <div *ngIf="i >= 0" class="w-1/2 ml-4">
+                        <textarea
+                            class="mt-4 border border-gray-300 px-3 py-1 w-full rounded transition duration-300 ease-in-out hover:border-blue-500"
+                            [name]="'output-' + i" [id]="'output-' + i"></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-4">
+                <span class="text-red-600">*</span> Testcase
+                <button (click)="uploadFile()"
+                    class="mt-4 ml-8 bg-button bg-button-hover:hover text-white py-1 px-2 rounded">
+                    Upload
+                </button>
+                <div class="mt-2">
+                    <span>Input files</span> <br>
+                    <input class="mt-2" (change)="onFileChange($event, 'input')" type="file" id="fileInput" accept=".in" multiple>
+                    <br>
+                    <span *ngIf="inputFiles.length !== 0"
+                        class="mt-4 container border border-gray-300 px-3 py-1 w-1/2 rounded"
+                        style="display: inline-flex;flex-direction: row; flex-wrap:wrap; min-width: 100px;">
+                        <ul *ngFor="let file of inputFiles; let i = index"
+                            style="list-style-type: none; padding: 0; margin: 0;">
+                            <li (click)="removeFileSelected(i, 'input')"
+                                class="border border-gray-300 bg-gray-100 rounded mr-1 pr-1 pl-1"
+                                style="display: inline-block; margin-bottom: 5px;">
+                                <a class="text-gray-500 font-bold">x </a>{{file.name}}
+                            </li>
+                        </ul>
+                    </span>
+                </div>
+                <div class="mt-2">
+                    <span>Output files</span> <br>
+                    <input class="mt-2" (change)="onFileChange($event, 'output')" type="file" id="fileInput" accept=".out" multiple>
+                    <br>
+                    <span *ngIf="outputFiles.length !== 0"
+                        class="mt-4 container border border-gray-300 px-3 py-1 w-1/2 rounded"
+                        style="display: inline-flex;flex-direction: row; flex-wrap:wrap; min-width: 100px;">
+                        <ul *ngFor="let file of outputFiles; let i = index"
+                            style="list-style-type: none; padding: 0; margin: 0;">
+                            <li (click)="removeFileSelected(i, 'output')"
+                                class="border border-gray-300 bg-gray-100 rounded mr-1 pr-1 pl-1"
+                                style="display: inline-block; margin-bottom: 5px;">
+                                <a class="text-gray-500 font-bold">x </a>{{file.name}}
+                            </li>
+                        </ul>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="w-1/6">
+            <div class="">
+                <span class="text-red-600">*</span> Time Limit <br>
+                <input [(ngModel)]="problem.timeLimit" type="text"
+                    class="mt-4 border border-gray-300 px-3 py-1 w-full rounded transition duration-300 ease-in-out hover:border-blue-500">
+            </div>
+            <div class="mt-4">
+                <span class="text-red-600">*</span> Memory Limit <br>
+                <input [(ngModel)]="problem.memoryLimit" type="text"
+                    class="mt-4 border border-gray-300 px-3 py-1 w-full rounded transition duration-300 ease-in-out hover:border-blue-500">
+            </div>
+            <div class="mt-4">
+                <span class="text-red-600">*</span> Src <br>
+                <input [(ngModel)]="problem.src" type="text"
+                    class="mt-4 border border-gray-300 px-3 py-1 w-full rounded transition duration-300 ease-in-out hover:border-blue-500">
+            </div>
+            <div class="mt-4">
+                <span class="text-red-600">*</span> Difficulty <br>
+                <select [(ngModel)]="problem.difficulty" id="mySelect"
+                    class="mt-4 border border-gray-300 rounded-md px-3 py-1 w-full">
+                    <option value="" disabled selected hidden>Chọn một tùy chọn</option>
+                    <option value="easy">Easy</option>
+                    <option value="medium">Medium</option>
+                    <option value="hard">Hard</option>
+                </select>
+            </div>
+            <div class="mt-4">
+                <span class="text-red-600">*</span> Category <br>
+                <div class="relative mt-4" id="inputDropdown">
+                    <span (click)="showCategory()" contenteditable="true"
+                        class="container border border-gray-300 px-3 py-1 w-full rounded focus:outline-none focus:border-blue-500"
+                        style="display: inline-flex; flex-wrap:wrap; min-width: 100px;">
+                        <ul *ngFor="let type of selectedType; let i = index">
+                            <li class="border border-gray-300 bg-gray-100 rounded mr-1 pr-1 pl-1">
+                                <a (click)="removeSelected(i)" class="text-gray-500 font-bold">X </a>{{type.name}}
+                            </li>
+                        </ul>
+                    </span>
+                    <div class="absolute bg-white border border-gray-300 mt-1 w-full rounded shadow-md overflow-y-auto"
+                        style="display: none; max-height: 100px;" id="dropdownOptions">
+                        <ul *ngFor="let category of categories; let i = index">
+                            <li (click)="addCategory(category)" [attr.data-value]="category.id"
+                                class="hover:bg-gray-100 py-2 px-3 cursor-pointer">
+                                {{category.name}}</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="pt-20" *ngIf="check === false">
+    <h1 class="text-black flex justify-center items-center">Không tìm thấy trang</h1>
+
+</div>

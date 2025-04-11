@@ -1,0 +1,112 @@
+<div class="main-problems pt-20 pb-20">
+    <h2>Danh sách bài</h2>
+    <hr class="custom-divider">
+    <div class="mt-4">
+        <div class="w-full hd h-60 rounded-lg border border-gray-300">
+            <div class="bg-gray-800 text-white">
+                <p class="px-4 py-2 text-base">Tìm kiếm bài tập</p>
+            </div>
+            <div>
+                <div class="ml-4 mr-4 mb-4">
+                    <input type="text" placeholder="Tìm bài..." [(ngModel)]="formSearch.search"
+                        class="border border-gray-300 px-3 py-1 w-full rounded-md transition duration-300 ease-in-out hover:border-blue-500">
+                    <div class="mt-4"></div>
+                    <span class="italic ">Dạng bài</span>
+                    <select id="mySelect" [(ngModel)]="formSearch.id"
+                        class="border border-gray-300 rounded-md px-3 py-1 w-full">
+                        <option value="">Chọn một tùy chọn</option>
+                        <option *ngFor="let topic of topics" [value]="topic.code">{{topic.name}}</option>
+                    </select>
+                    <div class="mt-4"></div>
+                    <span class="italic ">Độ khó</span>
+                        <select id="mySelect" [(ngModel)]="formSearch.difficulty"
+                            class="border border-gray-300 rounded-md px-3 py-1 w-full">
+                            <option value="">Tất cả</option>
+                            <option value="easy">Easy</option>
+                            <option value="medium">Medium</option>
+                            <option value="hard">Hard</option>
+                        </select>
+                    <div class="flex items-center justify-end mt-8">
+                        <button (click)="onReset()"
+                            class="bg-blue-500 text-white px-2 py-1 mt-2 rounded-md">Reset</button>
+                        <button (click)="onSubmit()"
+                            class="bg-blue-500 text-white px-2 py-1 mt-2 rounded-md ml-4">Tìm</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <nz-pagination (nzPageIndexChange)="onPageIndexChange($event)" [nzPageIndex]="index" [nzPageSize]="12"
+        [nzTotal]="total"></nz-pagination>
+    <div class="main-content">
+        <div class="flex flex-wrap items-start">
+            <div class="table-content ml-0 mx-auto overflow-auto rounded-lg">
+                <table class="w-full border-collapse border border-gray-300">
+                    <thead class="bg-gray-800 text-white">
+                        <tr>
+                            <th class="border border-gray-300 px-4 py-2" style="width: 15%;">ID</th>
+                            <th class="border border-gray-300 px-4 py-2">Bài</th>
+                            <th class="border border-gray-300 px-4 py-2" style="width: 10%;">Độ khó</th>
+                            <th class="border border-gray-300 px-4 py-2" style="width: 10%;">% AC</th>
+                            <th class="border border-gray-300 px-4 py-2" style="width: 10%;"># AC</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let problem of problems">
+                            <td class="border border-gray-300 px-4 py-2"><a
+                                    [href]="'/problems/' + problem.id">{{problem.id}}</a>
+                            </td>
+                            <td class="text-base border border-gray-300 px-4 py-2"><a
+                                    [href]="'/problems/' + problem.id">{{problem.title}}</a>
+                            </td>
+                            <td class="border border-gray-300 px-4 py-2">{{convertDifficulty(problem.difficulty)}}</td>
+                            <td *ngIf="problem.totalAC" class="border border-gray-300 px-4 py-2">
+                                {{calculate(problem.totalAC, problem.total)}}%
+                            </td>
+                            <td *ngIf="!problem.totalAC" class="border border-gray-300 px-4 py-2">###</td>
+                            <td *ngIf="problem.totalAC" class="border border-gray-300 px-4 py-2">{{problem.totalAC}}
+                            </td>
+                            <td *ngIf="!problem.totalAC" class="border border-gray-300 px-4 py-2">###</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="search-content mr-0  mx-auto overflow-hidden rounded-lg border border-gray-300">
+                <div class="bg-gray-800 text-white">
+                    <p class="px-4 py-2 text-base">Tìm kiếm bài tập</p>
+                </div>
+                <div>
+                    <div class="ml-4 mr-4 mb-4">
+                        <input type="text" placeholder="Tìm bài..." [(ngModel)]="formSearch.search"
+                            class="border border-gray-300 px-3 py-1 w-full rounded-md transition duration-300 ease-in-out hover:border-blue-500">
+                        <div class="mt-4"></div>
+                        <span class="italic ">Dạng bài</span>
+                        <select id="mySelect" [(ngModel)]="formSearch.id"
+                            class="border border-gray-300 rounded-md px-3 py-1 w-full">
+                            <option value="">Chọn một tùy chọn</option>
+                            <option *ngFor="let topic of topics" [value]="topic.code">{{topic.name}}</option>
+                        </select>
+                        <div class="mt-4"></div>
+                        <span class="italic ">Độ khó</span>
+                        <select id="mySelect" [(ngModel)]="formSearch.difficulty"
+                            class="border border-gray-300 rounded-md px-3 py-1 w-full">
+                            <option value="">Tất cả</option>
+                            <option value="easy">Easy</option>
+                            <option value="medium">Medium</option>
+                            <option value="hard">Hard</option>
+                        </select>
+                        <div class="flex items-center justify-end mt-8">
+                            <button (click)="onReset()"
+                                class="bg-blue-500 text-white px-2 py-1 mt-2 rounded-md">Reset</button>
+                            <button (click)="onSubmit()"
+                                class="bg-blue-500 text-white px-2 py-1 mt-2 rounded-md ml-4">Tìm</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <nz-pagination (nzPageIndexChange)="onPageIndexChange($event)" [nzPageIndex]="index" [nzPageSize]="12"
+        [nzTotal]="total"></nz-pagination>
+</div>

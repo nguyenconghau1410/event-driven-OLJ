@@ -1,0 +1,41 @@
+<div *ngIf="!check" class="main-content pt-20">
+    <h2>Lịch sử tham gia</h2>
+    <hr class="custom-divider">
+    <div *ngIf="total > pageSize" class="mt-4">
+        <nz-pagination (nzPageIndexChange)="onPageIndexChange($event)" [nzPageIndex]="pageIndex" [nzPageSize]="pageSize"
+            [nzTotal]="total"></nz-pagination>
+    </div>
+    <div class="mt-4 table-content  ml-0 mx-auto overflow-auto">
+        <table class="w-full border-collapse border border-gray-300">
+            <thead class="bg-gray-100 text-black">
+                <tr>
+                    <th class="text-left border border-gray-300 px-4 py-2" style="width: 15%;">ID</th>
+                    <th class="border border-gray-300 px-4 py-2" style="width: 27%;">Tên Contest</th>
+                    <th class="border border-gray-300 px-4 py-2" style="width: 17%;">Người tạo</th>
+                    <th class="border border-gray-300 px-4 py-2" style="width: 15%;">Start & End</th>
+                    <th class="border border-gray-300 px-4 py-2" style="width: 15%;">Đã kết thúc</th>
+                    <th class="border border-gray-300 px-4 py-2" style="width: 13%;">Tham gia</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr (click)="redirect(contest.id)" *ngFor="let contest of contests"
+                    class="text-center border-bottom hover:bg-gray-100 cursor-pointer">
+                    <td class="text-left px-4 py-2">{{contest.id}}</td>
+                    <td class="px-4 py-2">{{contest.title}}</td>
+                    <td class="px-4 py-2">{{contest.createdBy}}</td>
+                    <td class="px-4 py-2">
+                        {{contest.startTime}}, {{contest.hourStart}} <br>
+                        {{contest.endTime}}, {{contest.hourEnd}}
+                    </td>
+                    <td class="px-4 py-2">{{contest.finished}}</td>
+                    <td class="px-4 py-2">{{contest.participants.length}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="pt-20" *ngIf="check">
+    <h1 class="text-black flex justify-center items-center">Không tìm thấy trang</h1>
+
+</div>

@@ -1,0 +1,87 @@
+<div *ngIf="!check" class="main-content pb-20">
+    <div class="mt-4">
+        <span class="text-xl">Chuyển đổi quyền user</span>
+        <div class="mt-4">
+            <input type="text" [(ngModel)]="data.email" placeholder="Nhập email của user..."
+                class="border border-gray-300 px-3 py-1 w-1/3 rounded transition duration-300 ease-in-out hover:border-blue-500">
+            <select id="mySelect" [(ngModel)]="data.code"
+                class="ml-4 border border-gray-300 rounded-md px-3 py-1 w-1/5">
+                <option value="">Chọn một tùy chọn</option>
+                <option value="ADMIN">ADMIN</option>
+                <option value="TEACHER">TEACHER</option>
+                <option value="STUDENT">STUDENT</option>
+            </select>
+            <button (click)="showModal1()"
+                class="ml-4 bg-white-b hover:bg-green-400 rounded text-black py-2 px-4 border border-gray-400">
+                Lưu thay đổi
+            </button>
+        </div>
+    </div>
+    <div class="mt-4">
+        <span class="text-xl">Quản lý Users</span>
+    </div>
+    <div class="mt-4 flex items-center">
+        <button (click)="search()"
+            class="bg-white-b rounded hover:bg-blue-500 text-black py-2 px-4 border border-gray-400">
+            Tìm kiếm
+        </button>
+        <button (click)="reset()"
+            class="ml-4 mr-4 bg-white-b rounded hover:bg-gray-300 text-black py-2 px-4 border border-gray-400">
+            Reset
+        </button>
+        <input type="text" [(ngModel)]="searchFor" placeholder="Nhập tên thành viên..."
+            class="border border-gray-300 px-3 py-1 w-1/3 rounded transition duration-300 ease-in-out hover:border-blue-500">
+        <span class="ml-10">Tổng số Users: {{total}}</span>
+    </div>
+    <div class="mt-4">
+        <nz-pagination (nzPageIndexChange)="onPageIndexChange($event)" [nzPageIndex]="pageIndex" [nzPageSize]="pageSize"
+            [nzTotal]="total"></nz-pagination>
+    </div>
+    <div class="mt-4 table-content  ml-0 mx-auto overflow-auto">
+        <table class="w-full border-collapse border border-gray-300">
+            <thead class="bg-gray-100 text-black">
+                <tr>
+                    <th class="text-left border border-gray-300 px-4 py-2" style="width: 10%;">ID</th>
+                    <th class="border border-gray-300 px-4 py-2" style="width: 15%;">Tên</th>
+                    <th class="border border-gray-300 px-4 py-2" style="width: 15%;">Khoa</th>
+                    <th class="border border-gray-300 px-4 py-2" style="width: 15%;">Login lần cuối</th>
+                    <th class="border border-gray-300 px-4 py-2" style="width: 10%;">Vai trò</th>
+                    <th class="border border-gray-300 px-4 py-2" style="width: 10%;"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let user of users; let i = index"
+                    class="text-center border-bottom hover:bg-gray-100 cursor-pointer">
+                    <td class="text-left px-4 py-2"><a (click)="redirect(user.id)">{{user.id}}</a></td>
+                    <td class="px-4 py-2"><a (click)="redirect(user.id)">{{user.name}}</a></td>
+                    <td class="px-4 py-2">{{user.faculty}}</td>
+                    <td class="px-4 py-2">{{handleDate(user.loginAt)}}</td>
+                    <td class="px-4 py-2">{{user.role.code}}</td>
+                    <td class="text-left px-4 py-2"><a (click)="showModal(i)"><mat-icon
+                                style="vertical-align: middle; color: red;" title="Xóa user">close</mat-icon></a></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<nz-modal [(nzVisible)]="isVisible" nzTitle="Thông báo" [nzOkText]="textOk" [nzCancelText]="textCancel"
+    (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
+    <ng-container *nzModalContent>
+        <p>Bạn chắc chắn muốn xóa người dùng này?</p>
+        <p>Khi xóa thì tất cả các dữ liệu liên quan đến user đều bị xóa.</p>
+    </ng-container>
+</nz-modal>
+
+<nz-modal [(nzVisible)]="isVisible1" nzTitle="Thông báo" [nzOkText]="textOk" [nzCancelText]="textCancel"
+    (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk1()">
+    <ng-container *nzModalContent>
+        <p>Bạn chắc chắn muốn thay đổi quyền của người dùng này?</p>
+        <p>Khi thay đổi quyền với ADMIN hoặc TEACHER thì người dùng này có thể thay đổi dữ liệu.</p>
+    </ng-container>
+</nz-modal>
+
+<div class="pt-20" *ngIf="check">
+    <h1 class="text-black flex justify-center items-center">Không tìm thấy trang</h1>
+
+</div>

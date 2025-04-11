@@ -1,0 +1,61 @@
+<div *ngIf="!error" class="main-content pt-20">
+    <h2>Chi tiết xếp hạng</h2>
+    <hr class="custom-divider">
+    <div class="flex mt-4 mb-4">
+        <div class="lg:w-1/6">
+            <img class="rounded-xl w-44 h-44" src="{{user!.avatar}}" alt="Hình ảnh">
+            <br>
+        </div>
+        <div class="lg:w-2/6 h-full ml-4 overflow-auto">
+            <h3 class="text-2xl font-thin">{{user!.name}}</h3>
+            <p>ID: {{user!.id}}</p>
+            <p>Email: {{user!.email}} </p>
+            <p>Lớp: {{user!.classname}}</p>
+            <p>Khoa: {{user!.faculty}}</p>
+        </div>
+        <div class="w-3/6 hd h-full overflow-auto">
+            <h3 class="text-2xl font-thin">Tên Contest: <a (click)="redirectContest(contest.id)">{{contest.title}}</a>
+            </h3>
+            <p>ContestID: <a (click)="redirectContest(contest.id)">{{contest.id}}</a></p>
+        </div>
+    </div>
+    <div class="h-full lg:hidden overflow-auto">
+        <h3 class="text-2xl font-thin">Tên Contest: <a (click)="redirectContest(contest.id)">{{contest.title}}</a>
+        </h3>
+        <p>ContestID: <a (click)="redirectContest(contest.id)">{{contest.id}}</a></p>
+    </div>
+    <hr class="custom-divider">
+    <div class="mt-4 table-content  ml-0 mx-auto overflow-auto">
+        <table class="w-full border-collapse border border-gray-300">
+            <thead class="bg-gray-100 text-black">
+                <tr>
+                    <th class="border border-gray-300 px-4 py-2" style="width: 5%;">STT</th>
+                    <th class="text-left border border-gray-300 px-4 py-2" style="width: 10%;">Problem</th>
+                    <th class="border border-gray-300 px-4 py-2" style="width: 10%;">Thời gian & Bộ nhớ</th>
+                    <th class="border border-gray-300 px-4 py-2" style="width: 10%;">Điểm</th>
+                    <th class="border border-gray-300 px-4 py-2" style="width: 10%;">Testcase</th>
+                    <th class="border border-gray-300 px-4 py-2" style="width: 10%;">Hoàn thành lúc</th>
+                    <th class="border border-gray-300 px-4 py-2" style="width: 5%;"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let top of leaderboardList; let i = index"
+                    class="text-center border-bottom hover:bg-gray-100 cursor-pointer">
+                    <td class="px-4 py-2">{{i + 1}}.</td>
+                    <td class="text-left px-4 py-2">{{top['document']['title']}}</td>
+                    <td class="px-4 py-2">{{formatNumber(top['document']['time'])}} s /
+                        {{formatNumber(top['document']['memory'])}} MB</td>
+                    <td class="px-4 py-2">{{formatNumber(top['document']['point'])}}</td>
+                    <td class="px-4 py-2">{{top['document']['rightTest']}}/{{top['document']['totalTest']}}</td>
+                    <td class="px-4 py-2">{{formatDate(top['document']['createdAt'])}}</td>
+                    <td *ngIf="check()" class="px-4 py-2"><a (click)="redirect(top['document']['id'])">View</a></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div *ngIf="error" class="pt-20">
+    <h1 class="text-black flex justify-center items-center">Không tìm thấy trang</h1>
+
+</div>

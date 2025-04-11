@@ -1,0 +1,41 @@
+<div class="main-content pt-20">
+    <div class="flex justify-between">
+        <div>
+            <h2>Contest</h2>
+        </div>
+        <div><button (click)="createNew()"
+                class="mt-4 w-full bg-button bg-button-hover:hover text-white py-2 px-4 rounded">
+                Tạo mới
+            </button></div>
+    </div>
+    <hr class="custom-divider">
+    <div class="mt-4">
+        <nz-pagination (nzPageIndexChange)="onPageIndexChange($event)" [nzPageIndex]="pageIndex" [nzPageSize]="pageSize"
+            [nzTotal]="total"></nz-pagination>
+    </div>
+    <div class="mt-4 table-content  ml-0 mx-auto overflow-auto">
+        <table class="w-full border-collapse border border-gray-300">
+            <thead class="bg-gray-100 text-black">
+                <tr>
+                    <th class="text-left border border-gray-300 px-4 py-2" style="width: 15%;">ID</th>
+                    <th class="border border-gray-300 px-4 py-2" style="width: 27%;">Tên Contest</th>
+                    <th class="border border-gray-300 px-4 py-2" style="width: 17%;">Người tạo</th>
+                    <th class="border border-gray-300 px-4 py-2" style="width: 15%;">Ngày bắt đầu</th>
+                    <th class="border border-gray-300 px-4 py-2" style="width: 13%;">Số người tham gia</th>
+                    <th class="border border-gray-300 px-4 py-2" style="width: 10%;">Trạng thái</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr (click)="redirectEditComponent(contest.id)" *ngFor="let contest of contests"
+                    class="text-center border-bottom hover:bg-gray-100 cursor-pointer">
+                    <td class="text-left px-4 py-2">{{contest.id}}</td>
+                    <td class="px-4 py-2">{{contest.title}}</td>
+                    <td class="px-4 py-2">{{createdBy}}</td>
+                    <td class="px-4 py-2">{{contest.startTime}}</td>
+                    <td class="px-4 py-2">{{contest.participants.length}}</td>
+                    <td class="px-4 py-2">{{contest.state}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -1,0 +1,41 @@
+@media (max-width: 1024px) {
+    .expand {
+        padding-top: 15px;
+        padding-bottom: 25px;
+        margin-left: 8px;
+    }
+
+    .dl {
+        display: block;
+    }
+}
+
+@media (min-width: 1024px) {
+    .expand {
+        display: none;
+    }
+
+    .dl {
+        display: none;
+    }
+}
+
+[nz-menu] {
+    width: 180px;
+    border: 0;
+}
+
+.divider {
+    height: 1.5rem;
+    width: 1px;
+    background-color: #ffffff;
+    margin: 0 0.5rem;
+}
+
+.options {
+    display: none;
+}
+
+li:hover .options {
+    display: block;
+}

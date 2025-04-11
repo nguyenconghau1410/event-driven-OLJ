@@ -1,0 +1,41 @@
+@media (max-width: 1024px) {
+    .main-content {
+        margin-left: 20px;
+        margin-right: 20px;
+    }
+
+    .ml-200 {
+        margin-left: 20px;
+    }
+
+    .mar {
+        margin-left: 10px;
+    }
+}
+
+@media (min-width: 1024px) {
+    .main-content {
+        margin-left: 200px;
+        margin-right: 200px;
+    }
+
+    .ml-200 {
+        margin-left: 200px;
+    }
+
+    .mar {
+        margin-left: 40px;
+    }
+}
+
+.larger-checkbox {
+    transform: scale(1.5);
+}
+
+.bg-button {
+    background: linear-gradient(to bottom, #337ab7 0, #265a88 100%) repeat-x;
+}
+
+.bg-button-hover:hover {
+    background: linear-gradient(to bottom, #3366ff 0, #265a88 100%) repeat-x;
+}

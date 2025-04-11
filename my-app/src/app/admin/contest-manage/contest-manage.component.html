@@ -1,0 +1,43 @@
+<div *ngIf="!check" class="main-content pb-20">
+    <div class="mt-4">
+        <span class="text-xl">Quản lý Contest</span>
+    </div>
+    <div *ngIf="total > pageSize" class="mt-4">
+        <nz-pagination (nzPageIndexChange)="onPageIndexChange($event)" [nzPageIndex]="pageIndex" [nzPageSize]="pageSize"
+            [nzTotal]="total"></nz-pagination>
+    </div>
+    <div class="mt-4 table-content  ml-0 mx-auto overflow-auto">
+        <table class="w-full border-collapse border border-gray-300">
+            <thead class="bg-gray-100 text-black">
+                <tr>
+                    <th class="text-left border border-gray-300 px-4 py-2" style="width: 10%;">ID</th>
+                    <th class="border border-gray-300 px-4 py-2" style="width: 15%;">Tên chủ Contest</th>
+                    <th class="border border-gray-300 px-4 py-2" style="width: 15%;">Email</th>
+                    <th class="border border-gray-300 px-4 py-2" style="width: 10%;">Số lượng</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let data of listData" (click)="redirect(data.user.email)"
+                    class="text-center border-bottom hover:bg-gray-100 cursor-pointer">
+                    <td class="text-left px-4 py-2">{{data.user.id}}</td>
+                    <td class="px-4 py-2">{{data.user.name}}</td>
+                    <td class="px-4 py-2">{{data.user.email}}</td>
+                    <td class="px-4 py-2">{{data.quantity}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- <nz-modal [(nzVisible)]="isVisible" nzTitle="Thông báo" [nzOkText]="textOk" [nzCancelText]="textCancel"
+    (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
+    <ng-container *nzModalContent>
+        <p>Bạn chắc chắn muốn xóa người dùng này?</p>
+        <p>Khi xóa thì tất cả các dữ liệu liên quan đến user đều bị xóa.</p>
+    </ng-container>
+</nz-modal> -->
+
+<div class="pt-20" *ngIf="check">
+    <h1 class="text-black flex justify-center items-center">Không tìm thấy trang</h1>
+
+</div>

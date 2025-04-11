@@ -1,0 +1,77 @@
+<div *ngIf="!check" class="main-content pb-20">
+    <div class="mt-4 flex items-center">
+        <div class="w-1/2">
+            <p class="text-xl">Quản lý thể loại</p>
+        </div>
+        <div class="w-1/2 flex justify-end">
+            <button (click)="openForm()"
+                class="bg-white-b hover:bg-blue-500 rounded text-black py-2 px-4 border border-gray-400">
+                Thêm
+            </button>
+        </div>
+    </div>
+    <!-- <div *ngIf="total > pageSize" class="mt-4">
+        <nz-pagination (nzPageIndexChange)="onPageIndexChange($event)" [nzPageIndex]="pageIndex" [nzPageSize]="pageSize"
+            [nzTotal]="total"></nz-pagination>
+    </div> -->
+    <div class="mt-4 table-content  ml-0 mx-auto overflow-auto">
+        <table class="w-full border-collapse border border-gray-300">
+            <thead class="bg-gray-100 text-black">
+                <tr>
+                    <th class="text-left border border-gray-300 px-4 py-2" style="width: 15%;">ID</th>
+                    <th class="border border-gray-300 px-4 py-2" style="width: 15%;">Tên thể loại</th>
+                    <th class="border border-gray-300 px-4 py-2" style="width: 15%;">Code</th>
+                    <th class="border border-gray-300 px-4 py-2" style="width: 15%;"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let topic of topics;let i = index"
+                    class="text-center border-bottom hover:bg-gray-100 cursor-pointer">
+                    <td class="text-left px-4 py-2">{{topic.id}}</td>
+                    <td class="px-4 py-2">{{topic.name}}</td>
+                    <td class="px-4 py-2">{{topic.code}}</td>
+                    <td class="text-left px-4 py-2"><a (click)="showModal(i)"><mat-icon
+                                style="vertical-align: middle; color: red;" title="Xóa thể loại">close</mat-icon></a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<nz-modal [(nzVisible)]="isVisible" nzTitle="Thông báo" [nzOkText]="textOk" [nzCancelText]="textCancel"
+    (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
+    <ng-container *nzModalContent>
+        <p>Bạn chắc chắn muốn xóa topic này?</p>
+        <p>Khi xóa thì tất cả các dữ liệu liên quan đến topic đều bị xóa.</p>
+    </ng-container>
+</nz-modal>
+
+<div class="pt-20" *ngIf="check">
+    <h1 class="text-black flex justify-center items-center">Không tìm thấy trang</h1>
+
+</div>
+<div class="flex items-center justify-center">
+    <div *ngIf="showCreatedForm"
+        class="absolute top-0 left-0 w-full h-full bg-black bg-opacity-50 flex items-center justify-center">
+        <div class="bg-white p-6 rounded shadow-lg">
+            <h3 class="text-lg font-semibold mb-2">Chỉnh sửa thông tin</h3>
+            <div class="space-y-4">
+                <div>
+                    <label for="class" class="block">Tên topic:</label>
+                    <input type="text" [(ngModel)]="topic.name" class="w-full border rounded p-2" style="width: 300px;">
+                </div>
+                <div>
+                    <label for="email" class="block">Code:</label>
+                    <input type="text" [(ngModel)]="topic.code" class="w-full border rounded p-2" style="width: 300px;">
+                </div>
+
+                <div class="flex justify-end">
+                    <button (click)="save()" class="bg-blue-500 text-white px-4 py-2 rounded">Lưu</button>
+                    <button type="button" (click)="closeForm()"
+                        class="bg-gray-300 text-gray-700 px-4 py-2 rounded ml-2">Đóng</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

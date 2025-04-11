@@ -1,0 +1,39 @@
+@media (max-width: 1024px) {
+    .main-content {
+        margin-left: 20px;
+        margin-right: 20px;
+    }
+}
+
+@media (min-width: 1024px) {
+    .main-content {
+        margin-left: 120px;
+        margin-right: 120px;
+    }
+
+}
+
+h2 {
+    font-size: 30px;
+    padding-top: 16px;
+}
+
+.custom-divider {
+    border-top: 1px solid rgba(0, 0, 0, .2);
+}
+
+.bg-button {
+    background: linear-gradient(to bottom, #337ab7 0, #265a88 100%) repeat-x;
+}
+
+.bg-button-hover:hover {
+    background: linear-gradient(to bottom, #3366ff 0, #265a88 100%) repeat-x;
+}
+
+tr.border-bottom td {
+    border-bottom: 1px solid whiteSmoke;
+}
+
+tbody tr:last-child td {
+    border-bottom: none;
+}
