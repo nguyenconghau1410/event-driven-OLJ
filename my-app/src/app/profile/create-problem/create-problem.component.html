@@ -104,13 +104,13 @@
         </div>
         <div class="w-1/6">
             <div class="">
-                <span class="text-red-600">*</span> Time Limit <br>
-                <input [(ngModel)]="problem.timeLimit" type="text"
+                <span class="text-red-600">*</span> Time Limit (s)<br>
+                <input [(ngModel)]="problem.timeLimit" type="number"
                     class="mt-4 border border-gray-300 px-3 py-1 w-full rounded transition duration-300 ease-in-out hover:border-blue-500">
             </div>
             <div class="mt-4">
-                <span class="text-red-600">*</span> Memory Limit <br>
-                <input [(ngModel)]="problem.memoryLimit" type="text"
+                <span class="text-red-600">*</span> Memory Limit (MB)<br>
+                <input [(ngModel)]="problem.memoryLimit" type="number"
                     class="mt-4 border border-gray-300 px-3 py-1 w-full rounded transition duration-300 ease-in-out hover:border-blue-500">
             </div>
             <div class="mt-4">

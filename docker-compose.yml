@@ -82,3 +82,6 @@ networks:
 
 # docker run -dp 8090:8090 --name judge --privileged -v data:/app/data --network olj_rabbitmq-network  judge-service
 # docker run -dp 8088:8088 --network olj_rabbitmq-network  api-service --spring.rabbitmq.host=message-broker
+# docker build --build-arg NODE_ENV=production -t fe-oj .
+# docker build -t api-service .
+# docker cp testcase api:/app/data

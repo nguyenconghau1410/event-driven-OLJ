@@ -68,7 +68,6 @@ export class AppComponent {
               }
             },
             (error) => {
-              console.log("aeaeaeae");
               console.log(error);
             }
           )

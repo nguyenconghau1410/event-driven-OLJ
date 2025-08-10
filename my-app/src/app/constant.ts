@@ -92,6 +92,7 @@ export const API_URL_ADMIN = {
 
 export function decrypt(cipherText: string): string | null {
     try {
+      if(SECRET_KEY === "") return cipherText;
       const bytes = CryptoJS.AES.decrypt(cipherText, SECRET_KEY);
       return bytes.toString(CryptoJS.enc.Utf8) || null;
     } catch (e) {
