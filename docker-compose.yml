@@ -19,7 +19,7 @@ services:
 
   judge-service-1:
     container_name: judge-1
-    image: judge-service
+    image: racingboy560/judge-service
     ports:
       - "8090:8090"
     privileged: true
@@ -34,7 +34,7 @@ services:
 
   judge-service-2:
     container_name: judge-2
-    image: judge-service
+    image: racingboy560/judge-service
     ports:
       - "8092:8092"
     privileged: true
@@ -49,7 +49,7 @@ services:
 
   api-service:
     container_name: api
-    image: api-service
+    image: racingboy560/api-service
     ports:
       - "8088:8088"
     command: [ "--spring.rabbitmq.host=message-broker" ]
@@ -63,7 +63,7 @@ services:
 
   fe-service:
     container_name: front-end
-    image: fe-oj
+    image: racingboy560/fe-oj
     ports:
       - "4200:80"
     environment:
