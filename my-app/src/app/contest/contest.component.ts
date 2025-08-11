@@ -36,6 +36,10 @@ export class ContestComponent {
   ) { }
 
   ngOnInit() {
+    if (!sessionStorage.getItem('access_token')) {
+      this.router.navigate(['login'])
+      return
+    }
     this.activatedRoute.queryParams.subscribe(params => {
       if (params['page']) {
         this.contestService.getContestList(this.pageIndex - 1, true).subscribe(

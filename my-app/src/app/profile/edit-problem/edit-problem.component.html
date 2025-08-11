@@ -1,10 +1,10 @@
 <div *ngIf="check" class="main-problems pt-20 pb-20">
     <div class="flex justify-between">
         <div>
-            <h2>Edit problem</h2>
+            <h2>Chỉnh sửa Problem</h2>
         </div>
         <div><button (click)="save()" class="mt-4 w-full bg-button bg-button-hover:hover text-white py-2 px-4 rounded">
-                Save
+                Lưu
             </button></div>
     </div>
     <hr class="custom-divider">
@@ -17,13 +17,13 @@
                         class="mt-4 border border-gray-300 px-3 py-1 w-full rounded transition duration-300 ease-in-out hover:border-blue-500">
                 </div>
                 <div class="w-2/3 ml-4">
-                    <span class="text-red-600">*</span> Title <br>
+                    <span class="text-red-600">*</span> Tên Problem <br>
                     <input [(ngModel)]="problem.title" type="text"
                         class="mt-4 border border-gray-300 px-3 py-1 w-full rounded transition duration-300 ease-in-out hover:border-blue-500">
                 </div>
             </div>
             <div class="mt-4">
-                <span class="text-red-600">*</span> Description <br>
+                <span class="text-red-600">*</span> Nội dung bài toán <br>
                 <div class="m-4"></div>
                 <ckeditor [(ngModel)]="problem.description" [editor]="Editor"></ckeditor>
             </div>
@@ -64,8 +64,8 @@
                     Upload
                 </button>
                 <button (click)="clearTestcase()"
-                    class="mt-4 ml-8 bg-button bg-button-hover:hover text-white py-1 px-2 rounded">
-                    Clear
+                    class="mt-4 ml-4 bg-button bg-button-hover:hover text-white py-1 px-2 rounded">
+                    Xóa tất cả
                 </button>
                 <div class="flex">
                     <div class="mt-2 w-1/2 mr-4">
@@ -130,22 +130,22 @@
         </div>
         <div class="w-1/6">
             <div class="">
-                <span class="text-red-600">*</span> Time Limit <br>
-                <input [(ngModel)]="problem.timeLimit" type="text"
+                <span class="text-red-600">*</span> Thời gian giới hạn (s) <br>
+                <input [(ngModel)]="problem.timeLimit" type="number"
                     class="mt-4 border border-gray-300 px-3 py-1 w-full rounded transition duration-300 ease-in-out hover:border-blue-500">
             </div>
             <div class="mt-4">
-                <span class="text-red-600">*</span> Memory Limit <br>
-                <input [(ngModel)]="problem.memoryLimit" type="text"
+                <span class="text-red-600">*</span> Bộ nhớ giới hạn (MB) <br>
+                <input [(ngModel)]="problem.memoryLimit" type="number"
                     class="mt-4 border border-gray-300 px-3 py-1 w-full rounded transition duration-300 ease-in-out hover:border-blue-500">
             </div>
             <div class="mt-4">
-                <span class="text-red-600">*</span> Src <br>
+                <span class="text-red-600">*</span> Nguồn <br>
                 <input [(ngModel)]="problem.src" type="text"
                     class="mt-4 border border-gray-300 px-3 py-1 w-full rounded transition duration-300 ease-in-out hover:border-blue-500">
             </div>
             <div class="mt-4">
-                <span class="text-red-600">*</span> Difficulty <br>
+                <span class="text-red-600">*</span> Độ khó <br>
                 <select [(ngModel)]="problem.difficulty" id="mySelect"
                     class="mt-4 border border-gray-300 rounded-md px-3 py-1 w-full">
                     <option value="" disabled selected hidden>Chọn một tùy chọn</option>
@@ -155,7 +155,7 @@
                 </select>
             </div>
             <div class="mt-4">
-                <span class="text-red-600">*</span> Category <br>
+                <span class="text-red-600">*</span> Thể loại <br>
                 <div class="relative mt-4" id="inputDropdown">
                     <span (click)="showCategory()" contenteditable="true"
                         class="container border border-gray-300 px-3 py-1 w-full rounded focus:outline-none focus:border-blue-500"

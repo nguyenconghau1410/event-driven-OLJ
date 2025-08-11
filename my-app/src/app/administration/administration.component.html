@@ -1,7 +1,7 @@
 <div *ngIf="check" class="main-content pt-20">
     <div class="flex justify-between">
         <div>
-            <h2>Quản lí Problem</h2>
+            <h2>Quản lý Problems</h2>
         </div>
         <div><button (click)="createNew()"
                 class="mt-4 w-full bg-button bg-button-hover:hover text-white py-2 px-4 rounded">
@@ -33,11 +33,11 @@
                     <td class="text-base border border-gray-300 px-4 py-2">{{problem.state}}</td>
                     <td class="border border-gray-300 px-4 py-2">
                         <a (click)="updateState(problem.id)"><mat-icon style="vertical-align: middle;"
-                                title="Turn on public mode">radio_button_checked</mat-icon></a>
+                                title="Bật chế độ công khai">radio_button_checked</mat-icon></a>
                         <a (click)="edit(problem.id)"><mat-icon style="vertical-align: middle;"
-                                title="Edit">edit</mat-icon></a>
+                                title="Chỉnh sửa">edit</mat-icon></a>
                         <a (click)="delete(problem.id, i)"><mat-icon style="vertical-align: middle;"
-                                title="Delete">delete</mat-icon></a>
+                                title="Xóa">delete</mat-icon></a>
                     </td>
                 </tr>
             </tbody>

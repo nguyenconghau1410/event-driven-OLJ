@@ -29,6 +29,10 @@ export class UsersComponent {
   ) { }
 
   ngOnInit() {
+    if (!sessionStorage.getItem('access_token')) {
+      this.router.navigate(['login'])
+      return
+    }
     this.activatedRoute.queryParams.subscribe(params => {
       if (params['page']) {
         this.submissionService.getLeaderboardUser(this.pageIndex - 1).subscribe(

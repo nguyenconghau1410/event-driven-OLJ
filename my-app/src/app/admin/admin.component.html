@@ -2,17 +2,17 @@
 
     <div class="flex items-center">
         <div class="w-1/2">
-            <h2>Administration</h2>
+            <h2>Quản lý hệ thống</h2>
         </div>
         <div class="w-1/2">
             <ul class="flex justify-end">
                 <li (click)="redirect(4)" class="cursor-pointer px-4 py-2 text-base" [ngClass]="{'rounded-t-md border-b-0 border border-gray-300': index === 4,
-                                'border-b-2': index !== 4}">Categories</li>
+                                'border-b-2': index !== 4}">Thể loại</li>
                 <li (click)="redirect(0)" class="cursor-pointer px-4 py-2 text-base" [ngClass]="{'rounded-t-md border-b-0 border border-gray-300': index == 0,
                                 'border-b-2': index !== 0}">
                     Problems</li>
                 <li (click)="redirect(1)" class="cursor-pointer px-4 py-2 text-base" [ngClass]="{'rounded-t-md border-b-0 border border-gray-300': index === 1,
-                                'border-b-2': index !== 1}">Members</li>
+                                'border-b-2': index !== 1}">Thành viên</li>
                 <li (click)="redirect(2)" class="cursor-pointer px-4 py-2 text-base" [ngClass]="{'rounded-t-md border-b-0 border border-gray-300': index === 2,
                                 'border-b-2': index !== 2}">Contests</li>
                 <li (click)="redirect(3)" class="cursor-pointer px-4 py-2 text-base" [ngClass]="{'rounded-t-md border-b-0 border border-gray-300': index === 3,

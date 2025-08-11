@@ -41,3 +41,4 @@ RUN chmod +x judge.sh
 EXPOSE 8080
 
 ENTRYPOINT ["java", "-jar", "judge-0.0.1-SNAPSHOT.jar"]
+

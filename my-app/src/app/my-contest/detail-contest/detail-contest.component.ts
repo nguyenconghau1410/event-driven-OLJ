@@ -68,6 +68,27 @@ export class DetailContestComponent {
   public pieChartOptions: ChartOptions = {
     responsive: true
   }
+  handleBackgroundColor(labels: string[]) {
+    for (let i = 0; i < labels.length; i++) {
+      if (labels[i] == 'Error') {
+        return [
+          'rgb(0, 255, 0)',
+          'rgb(0, 0, 0)',
+          'rgb(85, 85, 85)',
+          'rgb(255, 205, 86)',
+          'rgb(200, 200, 200)',
+          'rgb(255, 0, 0)'
+        ]
+      }
+    }
+    return [
+      'rgb(0, 255, 0)',
+      'rgb(85, 85, 85)',
+      'rgb(255, 205, 86)',
+      'rgb(200, 200, 200)',
+      'rgb(255, 0, 0)'
+    ]
+  }
   labels: string[] = []
   data: number[] = []
   chartData = {
@@ -76,13 +97,7 @@ export class DetailContestComponent {
       {
         data: this.data,
         fill: true,
-        backgroundColor: [
-          'rgb(0, 255, 0)',
-          'rgb(85, 85, 85)',
-          'rgb(255, 205, 86)',
-          'rgb(200, 200, 200)',
-          'rgb(255, 0, 0)'
-        ]
+        backgroundColor: this.handleBackgroundColor(this.labels)
       }
     ]
   }
@@ -225,7 +240,8 @@ export class DetailContestComponent {
         (data) => {
           if (data) {
             for (let i = 0; i < data.length; i++) {
-              this.labels.push(this.adjustingString(data[i]['id']))
+              if (!data[i]['id']) this.labels.push('Error')
+              else this.labels.push(this.adjustingString(data[i]['id']))
               this.data.push(data[i]['quantity'])
             }
           }

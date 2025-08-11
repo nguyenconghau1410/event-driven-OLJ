@@ -43,12 +43,12 @@
                     <div class="absolute bg-white mt-7 py-2 w-40 border shadow-lg z-10 options">
                         <a href="/profile" class="block px-4 py-2 text-gray-800">Thông tin cá nhân</a>
                         <a href="/admin" *ngIf="user.role!.code === 'ADMIN'"
-                            class="block px-4 py-2 text-gray-800">Administation</a>
+                            class="block px-4 py-2 text-gray-800">Quản lý hệ thống</a>
                         <a href="/administration" *ngIf="user.role!.code !== 'STUDENT'"
-                            class="block px-4 py-2 text-gray-800">Quản lý problems </a>
+                            class="block px-4 py-2 text-gray-800">Quản lý Problems </a>
                         <a href="/my-contest" *ngIf="user.role!.code !== 'STUDENT'"
-                            class="block px-4 py-2 text-gray-800">Quản lý contests </a>
-                        <a href="/history-contest" class="block px-4 py-2 text-gray-800">Lịch sử contests</a>
+                            class="block px-4 py-2 text-gray-800">Quản lý Contests </a>
+                        <a href="/history-contest" class="block px-4 py-2 text-gray-800">Lịch sử Contests</a>
                         <a href="/my-submission" class="block px-4 py-2 text-gray-800">Các bài nộp</a>
                         <a (click)="signOut()" class="block px-4 py-2 text-gray-800">Đăng xuất</a>
                     </div>

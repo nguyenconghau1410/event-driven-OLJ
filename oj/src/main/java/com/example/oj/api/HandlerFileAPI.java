@@ -88,7 +88,7 @@ public class HandlerFileAPI {
 
     @GetMapping("/get-folders")
     public ResponseEntity<List<Map<String, Object>>> getFolder() {
-        Path testcase = Paths.get("./testcase");
+        Path testcase = Paths.get("data" + File.separator + "testcase");
         List<Map<String, Object>> foldersInfo = new ArrayList<>();
 
         try (Stream<Path> paths = Files.walk(testcase, 1)) {

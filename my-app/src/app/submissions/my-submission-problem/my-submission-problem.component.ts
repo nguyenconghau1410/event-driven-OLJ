@@ -33,6 +33,10 @@ export class MySubmissionProblemComponent {
   ) { }
 
   ngOnInit() {
+    if (!sessionStorage.getItem('access_token')) {
+      this.router.navigate(['login'])
+      return
+    }
     this.checkForMySubmission()
     this.dataService.user?.subscribe(
       user => {
