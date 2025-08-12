@@ -36,7 +36,7 @@ public class HandlerFileAPI {
 
     @PostMapping("/upload-file")
     public ResponseEntity<List<String>> uploadFile(@RequestParam("files")List<MultipartFile> files, @RequestParam String folder, @RequestParam String type) throws IOException {
-        Path dir = Paths.get("./testcase", folder);
+        Path dir = Paths.get(pathConfig, folder);
         if(Files.exists(dir)) {
             Path input = Paths.get(pathConfig, folder, "input");
             Path output = Paths.get(pathConfig, folder, "output");
