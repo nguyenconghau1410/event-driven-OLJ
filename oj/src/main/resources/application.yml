@@ -23,6 +23,8 @@ spring:
           initial-interval: 1000
           max-attempts: 3
           max-interval: 10000
+path:
+  config: ./data/testcase
 
 server:
   port: 8088

@@ -9,6 +9,7 @@ import com.example.oj.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.apache.tomcat.util.bcel.Const;
 import org.apache.tomcat.util.http.fileupload.FileUtils;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -30,12 +31,15 @@ public class HandlerFileAPI {
     private final ProblemService problemService;
     private final Utils utils;
     private final UserService userService;
+    @Value("${path.config}")
+    private String pathConfig;
+
     @PostMapping("/upload-file")
     public ResponseEntity<List<String>> uploadFile(@RequestParam("files")List<MultipartFile> files, @RequestParam String folder, @RequestParam String type) throws IOException {
         Path dir = Paths.get("./testcase", folder);
         if(Files.exists(dir)) {
-            Path input = Paths.get("./testcase", folder, "input");
-            Path output = Paths.get("./testcase", folder, "output");
+            Path input = Paths.get(pathConfig, folder, "input");
+            Path output = Paths.get(pathConfig, folder, "output");
             if(Files.exists(input) && Files.exists(output))
                 return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
         }
@@ -61,7 +65,7 @@ public class HandlerFileAPI {
             if(userDocument.isPresent()) {
                 Map<String, String> mp = new HashMap<>();
                 if(!userDocument.get().getRole().getCode().equals("STUDENT")) {
-                    String folderPath = "./testcase/" + folder;
+                    String folderPath = pathConfig + File.separator + folder;
                     Path directory = Paths.get(folderPath);
                     try {
                         if(Files.exists(directory)) {
@@ -88,7 +92,7 @@ public class HandlerFileAPI {
 
     @GetMapping("/get-folders")
     public ResponseEntity<List<Map<String, Object>>> getFolder() {
-        Path testcase = Paths.get("data" + File.separator + "testcase");
+        Path testcase = Paths.get(pathConfig);
         List<Map<String, Object>> foldersInfo = new ArrayList<>();
 
         try (Stream<Path> paths = Files.walk(testcase, 1)) {
